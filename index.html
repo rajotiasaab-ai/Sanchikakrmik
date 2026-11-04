@@ -3,125 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Sanchikakrmik - Developed by ANOOP KUMAR</title>
+    <title>Sanchikakrmik - Intelligent Storage Flow</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="app">
-    <!-- RGB BRANDING BANNER (Developed by ANOOP KUMAR in Chroma RGB) -->
-    <div class="rgb-branding-card">
-        <div class="rgb-glow-track"></div>
-        <div class="rgb-content">
-            <span class="rgb-sparkle-anim">✨</span>
-            <div class="rgb-text-wrapper">
-                <span class="rgb-text">DEVELOPED BY ANOOP KUMAR</span>
-            </div>
-            <span class="rgb-sparkle-anim">✨</span>
-        </div>
-    </div>
-
-    <!-- App Header -->
+    <!-- Header with discreet, elegant branding -->
     <header class="app-header">
-        <div class="app-title-group">
-            <div class="app-title-row">
-                <span class="app-logo-badge">⚡</span>
-                <h1 class="glow-title">Sanchikakrmik</h1>
-                <span class="hz-badge">240Hz</span>
+        <div class="brand-group">
+            <div class="logo-title-row">
+                <div class="logo-gem">⚡</div>
+                <h1 class="brand-title">Sanchikakrmik</h1>
+                <span class="hz-tag">240Hz</span>
             </div>
-            <p class="app-subtitle">संचिकाकर्मिक • Intelligent High-Performance File Organizer</p>
+            <div class="creator-badge" title="Developer">
+                <span class="rgb-mini-pulse"></span>
+                <span class="creator-text">by Anoop Kumar</span>
+            </div>
         </div>
-        <button class="btn-icon-undo" id="btnUndo" onclick="onUndoClicked()" title="Revert last file move">
-            <span class="undo-icon">↩️</span>
+
+        <button class="btn-undo-subtle" id="btnUndo" onclick="onUndoClicked()" title="Revert last move operation">
+            <span class="undo-icon">↩</span>
             <span>Undo</span>
         </button>
     </header>
 
-    <!-- Permission Warning Banner -->
-    <div class="perm-banner" id="permBanner" style="display: none;">
-        <div class="perm-banner-content">
-            <span class="perm-icon">⚠️</span>
-            <div class="perm-text">
+    <!-- Storage Permission Banner (auto-hides when granted) -->
+    <div class="perm-card" id="permBanner" style="display: none;">
+        <div class="perm-left">
+            <span class="perm-icon">🛡️</span>
+            <div class="perm-copy">
                 <div class="perm-title">All Files Access Needed</div>
-                <div class="perm-desc">Allow permission to access Download, DCIM & other folders without privacy blocks.</div>
+                <div class="perm-sub">Allow permission to access Download, DCIM & other folders without privacy blocks.</div>
             </div>
         </div>
-        <button class="btn-grant-perm" onclick="requestStoragePermission()">Grant Access</button>
+        <button class="btn-perm-grant" onclick="requestStoragePermission()">Grant Access</button>
     </div>
 
-    <!-- 1. Source Folder Selection Card -->
-    <section class="card glass-card">
-        <div class="card-header-row">
-            <div class="card-title">1. Source Folder (Files to Sort)</div>
-            <span class="badge badge-source">SOURCE</span>
+    <!-- Visual Flow Pipeline Stepper -->
+    <div class="flow-stepper">
+        <div class="step-item active" id="step1">
+            <div class="step-dot">1</div>
+            <span class="step-label">Source</span>
         </div>
-        <div class="folder-picker-box">
-            <div class="folder-icon-pulse">📂</div>
-            <div class="folder-info">
-                <div class="folder-label">Selected Source Directory</div>
-                <div class="folder-path" id="sourceFolderPath">Tap Choose to select folder...</div>
+        <div class="step-track" id="track1"></div>
+        <div class="step-item" id="step2">
+            <div class="step-dot">2</div>
+            <span class="step-label">Routing</span>
+        </div>
+        <div class="step-track" id="track2"></div>
+        <div class="step-item" id="step3">
+            <div class="step-dot">3</div>
+            <span class="step-label">Execute</span>
+        </div>
+    </div>
+
+    <!-- FLOW STAGE 1: SOURCE DIRECTORY -->
+    <section class="flow-card">
+        <div class="flow-card-head">
+            <div class="flow-stage-tag">STAGE 1</div>
+            <h2 class="flow-card-title">Select Source Directory</h2>
+        </div>
+
+        <!-- Quick Preset Shortcuts -->
+        <div class="source-presets">
+            <button class="preset-chip active" id="presetDownloads" onclick="applyPresetSource('Download')">
+                <span>📥</span> Downloads
+            </button>
+            <button class="preset-chip" id="presetDCIM" onclick="applyPresetSource('DCIM')">
+                <span>📷</span> DCIM
+            </button>
+            <button class="preset-chip" id="presetWhatsApp" onclick="applyPresetSource('Android/media/com.whatsapp/WhatsApp/Media')">
+                <span>💬</span> WhatsApp
+            </button>
+            <button class="preset-chip" id="presetCustom" onclick="openFolderPicker('source')">
+                <span>📂</span> Custom
+            </button>
+        </div>
+
+        <!-- Selected Source Path Display -->
+        <div class="source-display-box" onclick="openFolderPicker('source')">
+            <div class="source-icon">📂</div>
+            <div class="source-info">
+                <span class="source-hint">SCANNING FROM</span>
+                <span class="source-path" id="sourceFolderPath">Tap to choose source folder...</span>
             </div>
-            <button class="btn-browse" onclick="openFolderPicker('source')">Choose Folder</button>
+            <span class="source-chevron">›</span>
         </div>
     </section>
 
-    <!-- 2. Categories with Folder Selection Underneath Each Category -->
-    <section class="card glass-card">
-        <div class="card-header-row">
-            <div class="card-title">2. File Categories & Destination Folders</div>
-            <button class="btn-text-action" onclick="resetAllCategoryDestinations()">Reset All</button>
-        </div>
-
-        <div class="stats-row">
-            <div class="stat-item">
-                <div class="stat-val" id="totalFilesCount">0</div>
-                <div class="stat-lbl">Files Detected</div>
+    <!-- FLOW STAGE 2: CATEGORY ROUTING PIPELINE -->
+    <section class="flow-card">
+        <div class="flow-card-head">
+            <div class="flow-stage-tag">STAGE 2</div>
+            <div class="flow-card-title-group">
+                <h2 class="flow-card-title">Category Routing Pipeline</h2>
+                <span class="stats-badge" id="statsSummaryBadge">0 files detected</span>
             </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <div class="stat-val" id="totalSizeText">0 B</div>
-                <div class="stat-lbl">Total Size</div>
-            </div>
+            <button class="btn-link" onclick="resetAllCategoryDestinations()">Reset</button>
         </div>
 
-        <div class="section-hint">
-            Har category ke neeche apna pasandida folder chune jisme files transfer karni hain:
-        </div>
+        <p class="flow-stage-desc">
+            Files stream from left categories directly into your chosen destination folders on the right. Tap any folder to change it:
+        </p>
 
-        <!-- Category Cards Container -->
-        <div class="categories-container" id="categoriesContainer">
-            <!-- Dynamically generated category cards -->
+        <!-- Category Flow Stream List -->
+        <div class="flow-pipeline-container" id="pipelineContainer">
+            <!-- Dynamically populated category flow items -->
         </div>
     </section>
 
-    <!-- 3. Sorting Options -->
-    <section class="card glass-card">
-        <div class="card-title">3. Sorting Options</div>
-        <div class="options-list">
-            <div class="option-row">
-                <div class="option-text">
-                    <span class="option-title">Recursive Scan</span>
-                    <span class="option-desc">Scan subfolders inside source directory</span>
+    <!-- FLOW STAGE 3: OPTIONS & EXECUTE FLOW -->
+    <section class="flow-card">
+        <div class="flow-card-head">
+            <div class="flow-stage-tag">STAGE 3</div>
+            <h2 class="flow-card-title">Sorting Options &amp; Execution</h2>
+        </div>
+
+        <div class="options-grid">
+            <div class="option-pill">
+                <div class="option-meta">
+                    <span class="opt-title">Recursive Scan</span>
+                    <span class="opt-desc">Scan subfolders</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="toggleRecursive" checked onchange="onRecursiveToggle()">
                     <span class="slider"></span>
                 </label>
             </div>
-            <div class="option-row">
-                <div class="option-text">
-                    <span class="option-title">Safe Duplicates</span>
-                    <span class="option-desc">Auto-rename duplicates: file (1).ext</span>
+
+            <div class="option-pill">
+                <div class="option-meta">
+                    <span class="opt-title">Collision-Safe</span>
+                    <span class="opt-desc">file (1).ext</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="toggleDuplicates" checked disabled>
                     <span class="slider"></span>
                 </label>
             </div>
-            <div class="option-row">
-                <div class="option-text">
-                    <span class="option-title">Dry-Run Preview</span>
-                    <span class="option-desc">Simulate sorting without moving files</span>
+
+            <div class="option-pill">
+                <div class="option-meta">
+                    <span class="opt-title">Dry-Run Preview</span>
+                    <span class="opt-desc">Test without moving</span>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="toggleDryRun">
@@ -129,54 +155,54 @@
                 </label>
             </div>
         </div>
+
+        <!-- Live Flow Progress (Shown while running) -->
+        <div class="flow-progress-card" id="progressCard" style="display: none;">
+            <div class="progress-meta">
+                <span id="progressText">Transferring files...</span>
+                <span id="progressPercent" class="pct-glow">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressBarFill"></div>
+            </div>
+            <div class="progress-stream-file" id="progressFile">Preparing files...</div>
+        </div>
+
+        <!-- Action Trigger Buttons -->
+        <div class="flow-actions">
+            <button class="btn-flow-primary" id="btnStartSort" onclick="onStartSortClicked()">
+                <span class="flow-btn-icon">⚡</span>
+                <span>Start Sorting Flow</span>
+                <span class="flow-btn-arrow">➔</span>
+            </button>
+            <button class="btn-flow-secondary" id="btnScan" onclick="startScan()">
+                <span>🔄 Rescan Source</span>
+            </button>
+        </div>
     </section>
 
-    <!-- Progress Card -->
-    <section class="card glass-card" id="progressCard">
-        <div class="progress-info">
-            <span id="progressText">Transferring files...</span>
-            <span id="progressPercent" class="rgb-pct-glow">0%</span>
-        </div>
-        <div class="progress-track">
-            <div class="progress-fill" id="progressBarFill"></div>
-        </div>
-        <div class="progress-current-file" id="progressFile">Preparing files...</div>
-    </section>
-
-    <!-- Bottom Actions -->
-    <div class="actions-group">
-        <button class="btn-primary-rgb" id="btnStartSort" onclick="onStartSortClicked()">
-            <span class="btn-icon">⚡</span>
-            <span>Transfer &amp; Organize Files</span>
-        </button>
-        <button class="btn-secondary" id="btnScan" onclick="startScan()">
-            <span>🔍 Rescan Source Folder</span>
-        </button>
-    </div>
-
-    <!-- RGB Lighting Footer Branding -->
+    <!-- Subtle Footer Branding -->
     <footer class="app-footer">
-        <div class="rgb-footer-pill">
-            <span class="rgb-glow-dot"></span>
-            <span>Sanchikakrmik • Developed by <strong>ANOOP KUMAR</strong></span>
-            <span class="rgb-glow-dot"></span>
+        <div class="footer-creds">
+            <span class="footer-rgb-dot"></span>
+            <span>Sanchikakrmik • Designed &amp; Developed by <strong>Anoop Kumar</strong></span>
         </div>
-        <div class="hz-indicator">⚡ 240Hz High Refresh Rate Engine Active</div>
+        <div class="footer-sub">240Hz VSync Engine • Zero Internet Access • 100% Offline</div>
     </footer>
 </div>
 
-<!-- IN-APP FOLDER PICKER MODAL (Bypasses all Android Privacy Restrictions!) -->
+<!-- IN-APP FOLDER PICKER MODAL -->
 <div class="modal-overlay" id="folderPickerModal" style="display: none;">
     <div class="modal-card">
         <div class="modal-header">
-            <div class="modal-title-group">
+            <div class="modal-header-meta">
                 <span class="modal-icon">📂</span>
                 <div class="modal-title" id="modalTitle">Select Folder</div>
             </div>
             <button class="btn-close-modal" onclick="closeFolderPicker()">✕</button>
         </div>
 
-        <!-- Quick Shortcuts -->
+        <!-- Quick Shortcut Pills -->
         <div class="quick-shortcuts">
             <button class="chip" onclick="navigateShortcut('Download')">📥 Download</button>
             <button class="chip" onclick="navigateShortcut('Pictures')">🖼️ Pictures</button>
@@ -188,7 +214,7 @@
 
         <!-- Breadcrumb Navigation Bar -->
         <div class="breadcrumbs-bar">
-            <button class="btn-up-dir" id="btnUpDir" onclick="navigateUpDir()" title="Go up one folder">⬆️ Back</button>
+            <button class="btn-up-dir" id="btnUpDir" onclick="navigateUpDir()" title="Go up one folder">⬆ Up</button>
             <div class="breadcrumb-path" id="breadcrumbPathText">/storage/emulated/0</div>
         </div>
 

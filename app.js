@@ -1,5 +1,5 @@
-// Sanchikakrmik - Intelligent High-Performance Storage Organizer
-// Developed by ANOOP KUMAR (240Hz Ultra-Smooth Mode Active)
+// Sanchikakrmik - Flow UI Controller
+// Crafted by Anoop Kumar
 
 let storageRoot = "/storage/emulated/0";
 let hasPermission = false;
@@ -33,9 +33,8 @@ let pickerParentPath = "";
 // DOM Elements
 const permBanner = document.getElementById('permBanner');
 const sourcePathEl = document.getElementById('sourceFolderPath');
-const totalFilesEl = document.getElementById('totalFilesCount');
-const totalSizeEl = document.getElementById('totalSizeText');
-const categoriesContainer = document.getElementById('categoriesContainer');
+const statsSummaryBadge = document.getElementById('statsSummaryBadge');
+const pipelineContainer = document.getElementById('pipelineContainer');
 
 const progressCard = document.getElementById('progressCard');
 const progressBar = document.getElementById('progressBarFill');
@@ -55,7 +54,7 @@ const breadcrumbPathText = document.getElementById('breadcrumbPathText');
 const modalFolderList = document.getElementById('modalFolderList');
 const btnUpDir = document.getElementById('btnUpDir');
 
-// Initialize Category Destinations with Root + Default Subdirectories
+// Initialize Category Destinations
 function initCategoryDestinations(baseRoot) {
     const root = baseRoot || storageRoot;
     for (let cat in defaultCategories) {
@@ -66,62 +65,82 @@ function initCategoryDestinations(baseRoot) {
 }
 initCategoryDestinations(storageRoot);
 
-// Render Category Cards (Option to choose folder placed directly underneath each category!)
-function renderCategories() {
-    categoriesContainer.innerHTML = '';
+// Render Flow Pipeline Nodes (Origin -> Stream -> Target)
+function renderPipeline() {
+    pipelineContainer.innerHTML = '';
     for (let [cat, data] of Object.entries(defaultCategories)) {
-        const destPath = categoryDestinations[cat] || 'Not chosen yet';
-        const card = document.createElement('div');
-        card.className = 'category-card';
-        card.style.borderColor = data.count > 0 ? data.color : '#233149';
+        const fullDestPath = categoryDestinations[cat] || '';
+        const shortFolderName = fullDestPath.split('/').filter(Boolean).pop() || 'Choose';
 
-        card.innerHTML = `
-            <div class="category-card-top">
-                <div class="category-title-wrap">
-                    <span class="cat-icon-badge">${data.icon}</span>
-                    <span class="cat-title-name">${cat.replace('_', ' ')}</span>
+        const row = document.createElement('div');
+        row.className = 'flow-node-row';
+        if (data.count > 0) {
+            row.style.borderColor = data.color + '44';
+        }
+
+        row.innerHTML = `
+            <!-- Flow Origin -->
+            <div class="flow-origin-node">
+                <span class="flow-cat-icon">${data.icon}</span>
+                <div class="flow-cat-meta">
+                    <span class="flow-cat-name">${cat.replace('_', ' ')}</span>
+                    <span class="flow-cat-count" style="color: ${data.count > 0 ? data.color : 'var(--text-dim)'};">
+                        ${data.count} files
+                    </span>
                 </div>
-                <span class="cat-files-badge" style="color: ${data.color};">
-                    ${data.count} files
-                </span>
             </div>
 
-            <!-- Destination Folder Underneath Each Category -->
-            <div class="category-card-dest-box">
-                <div class="cat-dest-label-row">
-                    <span class="cat-dest-label">Destination Folder for ${cat.replace('_', ' ')}:</span>
-                </div>
-                <div class="cat-dest-path-text ${!categoryDestinations[cat] ? 'empty' : ''}" title="${destPath}">
-                    📁 ${destPath}
-                </div>
-                <div class="cat-dest-actions">
-                    <button class="btn-cat-choose-folder" onclick="openFolderPicker('category', '${cat}')">
-                        <span>📂</span>
-                        <span>Choose Folder for ${cat.replace('_', ' ')}</span>
-                    </button>
-                    <button class="btn-cat-reset-dest" onclick="resetSingleCategoryDest('${cat}')" title="Reset folder">
-                        <span>↺</span>
-                    </button>
+            <!-- Flow Connector Stream -->
+            <div class="flow-stream-connector">
+                <span class="flow-stream-arrow">➔</span>
+            </div>
+
+            <!-- Flow Destination Target -->
+            <div class="flow-target-node">
+                <div class="target-folder-pill" onclick="openFolderPicker('category', '${cat}')" title="${fullDestPath}">
+                    <span class="target-folder-icon">📂</span>
+                    <span class="target-folder-text">${escapeHtml(shortFolderName)}/</span>
+                    <span class="target-folder-edit">✏️</span>
                 </div>
             </div>
         `;
-        categoriesContainer.appendChild(card);
+        pipelineContainer.appendChild(row);
     }
 }
-renderCategories();
-
-function resetSingleCategoryDest(cat) {
-    categoryDestinations[cat] = `${storageRoot}/${defaultCategories[cat].defaultSubdir}`;
-    renderCategories();
-    showToast(`Reset destination for ${cat}`);
-}
+renderPipeline();
 
 function resetAllCategoryDestinations() {
     for (let cat in defaultCategories) {
         categoryDestinations[cat] = `${storageRoot}/${defaultCategories[cat].defaultSubdir}`;
     }
-    renderCategories();
-    showToast("All category destination folders reset to defaults!");
+    renderPipeline();
+    showToast("Routing pipeline reset to defaults");
+}
+
+// Preset Source Handling
+function applyPresetSource(subpath) {
+    const fullPath = `${storageRoot}/${subpath}`;
+    document.querySelectorAll('.preset-chip').forEach(el => el.classList.remove('active'));
+
+    if (subpath === 'Download') document.getElementById('presetDownloads')?.classList.add('active');
+    else if (subpath === 'DCIM') document.getElementById('presetDCIM')?.classList.add('active');
+    else if (subpath.includes('WhatsApp')) document.getElementById('presetWhatsApp')?.classList.add('active');
+    else document.getElementById('presetCustom')?.classList.add('active');
+
+    setSourcePath(fullPath);
+}
+
+function setSourcePath(path) {
+    currentSourcePath = path;
+    sourcePathEl.innerText = path;
+    sourcePathEl.style.color = '#38bdf8';
+    
+    // Update Stepper
+    document.getElementById('step1')?.classList.add('active');
+    document.getElementById('track1')?.classList.add('filled');
+    document.getElementById('step2')?.classList.add('active');
+
+    startScan();
 }
 
 // Android Permission Status Callback
@@ -134,9 +153,7 @@ window.onPermissionStatusChanged = function(granted, defaultRoot) {
     if (granted) {
         permBanner.style.display = 'none';
         if (!currentSourcePath) {
-            // Default to Download folder
-            const defaultDownload = `${storageRoot}/Download`;
-            setSourcePath(defaultDownload);
+            applyPresetSource('Download');
         }
     } else {
         permBanner.style.display = 'flex';
@@ -148,27 +165,20 @@ function requestStoragePermission() {
         window.AndroidBridge.requestPermission();
     } else {
         window.onPermissionStatusChanged(true, "/storage/emulated/0");
-        showToast("Demo: Permission Granted!");
+        showToast("Demo: Permission Granted");
     }
 }
 
-function setSourcePath(path) {
-    currentSourcePath = path;
-    sourcePathEl.innerText = path;
-    sourcePathEl.style.color = '#38bdf8';
-    startScan();
-}
-
-// IN-APP FOLDER PICKER MODAL (Bypasses Android SAF Privacy Restrictions)
+// IN-APP FOLDER PICKER MODAL
 function openFolderPicker(targetType, categoryKey = null) {
     pickerTargetType = targetType;
     pickerCategoryKey = categoryKey;
 
     if (targetType === 'source') {
-        modalTitle.innerText = "Select Source Folder (Files to Sort)";
+        modalTitle.innerText = "Select Source Folder";
         pickerCurrentPath = currentSourcePath || `${storageRoot}/Download`;
     } else {
-        modalTitle.innerText = `Select Destination for ${categoryKey.replace('_', ' ')}`;
+        modalTitle.innerText = `Route ${categoryKey.replace('_', ' ')} Destination`;
         pickerCurrentPath = categoryDestinations[categoryKey] || storageRoot;
     }
 
@@ -182,7 +192,7 @@ function closeFolderPicker() {
 
 function loadFolderList(path) {
     breadcrumbPathText.innerText = path;
-    modalFolderList.innerHTML = '<div class="loading-folders">Loading folders...</div>';
+    modalFolderList.innerHTML = '<div class="loading-folders">Loading directories...</div>';
 
     if (window.AndroidBridge && window.AndroidBridge.listFolders) {
         try {
@@ -190,7 +200,6 @@ function loadFolderList(path) {
             const data = JSON.parse(raw);
 
             if (data.error) {
-                // Try parent if path doesn't exist
                 if (data.parentPath) {
                     loadFolderList(data.parentPath);
                     return;
@@ -211,7 +220,6 @@ function loadFolderList(path) {
             modalFolderList.innerHTML = `<div class="empty-folders">Error: ${e.message}</div>`;
         }
     } else {
-        // Desktop Browser Demo Simulation
         simulateFolderList(path);
     }
 }
@@ -219,7 +227,7 @@ function loadFolderList(path) {
 function renderFolderItems(folders) {
     modalFolderList.innerHTML = '';
     if (!folders || folders.length === 0) {
-        modalFolderList.innerHTML = '<div class="empty-folders">📂 No subfolders here (You can create one or select this folder)</div>';
+        modalFolderList.innerHTML = '<div class="empty-folders">📂 Empty folder (You can select this location)</div>';
         return;
     }
 
@@ -261,27 +269,28 @@ function promptCreateNewFolder() {
                 showToast("Error: " + (res.error || "Could not create folder"));
             }
         } catch (e) {
-            showToast("Error creating folder: " + e.message);
+            showToast("Error: " + e.message);
         }
     } else {
-        showToast("Demo: Created folder " + name);
+        showToast("Demo: Created " + name);
         loadFolderList(`${pickerCurrentPath}/${name.trim()}`);
     }
 }
 
 function confirmCurrentFolderSelection() {
     if (pickerTargetType === 'source') {
+        document.querySelectorAll('.preset-chip').forEach(el => el.classList.remove('active'));
+        document.getElementById('presetCustom')?.classList.add('active');
         setSourcePath(pickerCurrentPath);
-        showToast("Source folder selected: " + pickerCurrentPath);
+        showToast("Source: " + pickerCurrentPath);
     } else if (pickerTargetType === 'category' && pickerCategoryKey) {
         categoryDestinations[pickerCategoryKey] = pickerCurrentPath;
-        renderCategories();
-        showToast(`Destination for ${pickerCategoryKey}: ${pickerCurrentPath}`);
+        renderPipeline();
+        showToast(`${pickerCategoryKey} ➔ ${pickerCurrentPath.split('/').pop()}/`);
     }
     closeFolderPicker();
 }
 
-// Browser Simulation Fallback
 function simulateFolderList(path) {
     pickerCurrentPath = path;
     const parts = path.split('/').filter(Boolean);
@@ -297,13 +306,12 @@ function simulateFolderList(path) {
         { name: "Music", path: `${storageRoot}/Music` },
         { name: "Movies", path: `${storageRoot}/Movies` },
         { name: "Documents", path: `${storageRoot}/Documents` },
-        { name: "DCIM", path: `${storageRoot}/DCIM` },
-        { name: "WhatsApp Media", path: `${storageRoot}/WhatsApp Media` }
+        { name: "DCIM", path: `${storageRoot}/DCIM` }
     ];
     renderFolderItems(demoDirs);
 }
 
-// Scanning
+// Scanning Files
 function onRecursiveToggle() {
     if (currentSourcePath) {
         startScan();
@@ -312,18 +320,17 @@ function onRecursiveToggle() {
 
 function startScan() {
     if (!currentSourcePath) {
-        showToast("Please choose a Source folder first!");
+        showToast("Please select a Source folder first");
         return;
     }
 
     const recursive = document.getElementById('toggleRecursive').checked;
     scanBtn.disabled = true;
-    scanBtn.innerText = "Scanning files...";
+    scanBtn.innerText = "Scanning...";
 
     if (window.AndroidBridge && window.AndroidBridge.scanFolder && currentSourcePath) {
         window.AndroidBridge.scanFolder(currentSourcePath, recursive);
     } else {
-        // Desktop Browser Demo Simulation
         setTimeout(() => {
             window.onScanComplete({
                 totalFiles: 86,
@@ -337,16 +344,17 @@ function startScan() {
                     'APKs_Apps': 4
                 }
             });
-        }, 350);
+        }, 300);
     }
 }
 
 window.onScanComplete = function(data) {
     scanBtn.disabled = false;
-    scanBtn.innerText = "🔍 Rescan Source Folder";
+    scanBtn.innerText = "🔄 Rescan Source";
 
-    totalFilesEl.innerText = data.totalFiles || 0;
-    totalSizeEl.innerText = formatBytes(data.totalBytes || 0);
+    const totalCount = data.totalFiles || 0;
+    const totalFormatted = formatBytes(data.totalBytes || 0);
+    statsSummaryBadge.innerText = `${totalCount} files • ${totalFormatted}`;
 
     for (let c in defaultCategories) defaultCategories[c].count = 0;
 
@@ -357,8 +365,8 @@ window.onScanComplete = function(data) {
         }
     }
 
-    renderCategories();
-    showToast(`Found ${data.totalFiles || 0} files ready to sort!`);
+    renderPipeline();
+    showToast(`Found ${totalCount} files ready to route`);
 };
 
 // Start Sorting / Transfer
@@ -366,7 +374,7 @@ function onStartSortClicked() {
     if (isSorting) return;
 
     if (!currentSourcePath) {
-        showToast("⚠️ Please choose a Source folder first!");
+        showToast("⚠️ Please select a Source folder first");
         return;
     }
 
@@ -376,10 +384,14 @@ function onStartSortClicked() {
 
     isSorting = true;
     sortBtn.disabled = true;
-    progressCard.style.display = 'block';
+    progressCard.style.display = 'flex';
     progressBar.style.width = '0%';
     progressPercent.innerText = '0%';
-    progressText.innerText = isDryRun ? "Simulating sort (Dry Run)..." : "Transferring files...";
+    progressText.innerText = isDryRun ? "Simulating flow (Dry Run)..." : "Transferring files...";
+
+    // Stepper Stage 3 active
+    document.getElementById('step3')?.classList.add('active');
+    document.getElementById('track2')?.classList.add('filled');
 
     if (window.AndroidBridge && window.AndroidBridge.startSort) {
         window.AndroidBridge.startSort(currentSourcePath, destJson, recursive, isDryRun);
@@ -392,8 +404,8 @@ window.onSortProgress = function(current, total, fileName, targetFolder) {
     const pct = total > 0 ? Math.floor((current / total) * 100) : 0;
     progressBar.style.width = pct + '%';
     progressPercent.innerText = pct + '%';
-    progressText.innerText = `${current} / ${total} files`;
-    progressFile.innerText = `Transferring: ${fileName} ➔ ${targetFolder}/`;
+    progressText.innerText = `${current} / ${total} files routed`;
+    progressFile.innerText = `${fileName} ➔ ${targetFolder}/`;
 };
 
 window.onSortComplete = function(movedCount, dryRun) {
@@ -402,9 +414,9 @@ window.onSortComplete = function(movedCount, dryRun) {
     progressBar.style.width = '100%';
     progressPercent.innerText = '100%';
 
-    const actionText = dryRun ? "Dry run preview completed" : "Successfully transferred";
-    progressText.innerText = `${actionText} (${movedCount} files)!`;
-    progressFile.innerText = dryRun ? "No files were moved." : "Files organized into respective category folders.";
+    const actionText = dryRun ? "Dry run preview complete" : "Successfully organized";
+    progressText.innerText = `${actionText} (${movedCount} files)`;
+    progressFile.innerText = dryRun ? "No files were moved." : "All files routed into destination folders.";
 
     showToast(`✅ ${actionText} ${movedCount} files!`);
 
@@ -417,13 +429,13 @@ window.onSortComplete = function(movedCount, dryRun) {
 function onUndoClicked() {
     if (isSorting) return;
 
-    showToast("Reverting last file operations...");
+    showToast("Reverting last sorting flow...");
     if (window.AndroidBridge && window.AndroidBridge.undoSort) {
         window.AndroidBridge.undoSort();
     } else {
         setTimeout(() => {
-            window.onUndoComplete(86, "Demo: Successfully restored 86 files to original folders.");
-        }, 500);
+            window.onUndoComplete(86, "Restored 86 files to original folders.");
+        }, 400);
     }
 }
 
@@ -440,7 +452,6 @@ window.onError = function(errorMessage) {
     sortBtn.disabled = false;
     scanBtn.disabled = false;
     showToast("⚠️ " + errorMessage);
-    progressText.innerText = "Error encountered.";
 };
 
 function simulateSortDemo() {
@@ -467,7 +478,7 @@ function simulateSortDemo() {
                 window.onSortComplete(files.length, isDryRun);
             }, 300);
         }
-    }, 220);
+    }, 200);
 }
 
 // Helpers
@@ -476,7 +487,11 @@ function formatBytes(bytes) {
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+function escapeHtml(str) {
+    return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 let toastTimer = null;
@@ -487,5 +502,5 @@ function showToast(msg) {
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
         toastEl.classList.remove('show');
-    }, 3200);
+    }, 2800);
 }
