@@ -1,0 +1,27 @@
+# Gradle build caches & outputs
+.gradle/
+build/
+app/build/
+**/build/
+app/release/
+**/release/
+
+# Local Android SDK configuration
+local.properties
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+.navigation/
+captures/
+
+# Keystores (Sensitive developer signing keys)
+*.keystore
+*.jks
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
