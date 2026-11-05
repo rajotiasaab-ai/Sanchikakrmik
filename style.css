@@ -1,15 +1,33 @@
 :root {
-    --bg-color: #070b14;
-    --card-bg: rgba(13, 20, 36, 0.88);
-    --card-border: rgba(255, 255, 255, 0.08);
+    /* Android 17 Liquid Glass Light System */
+    --bg-base: #f5f7fb;
+    --card-glass: rgba(255, 255, 255, 0.65);
+    --card-glass-hover: rgba(255, 255, 255, 0.82);
+    --card-border: rgba(255, 255, 255, 0.92);
+    --card-border-subtle: rgba(226, 232, 240, 0.6);
+    --glass-highlight: rgba(255, 255, 255, 0.95);
+    
     --primary: #4f46e5;
     --primary-light: #6366f1;
-    --accent-cyan: #06b6d4;
-    --accent-emerald: #10b981;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --text-dim: #64748b;
-    --flow-line: rgba(99, 102, 241, 0.3);
+    --primary-soft: #eef2ff;
+    --accent-cyan: #0284c7;
+    --accent-emerald: #059669;
+
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+
+    --glass-shadow: 
+        0 10px 30px -6px rgba(15, 23, 42, 0.05),
+        0 4px 12px -2px rgba(15, 23, 42, 0.03),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+
+    --glass-shadow-active:
+        0 16px 36px -4px rgba(79, 70, 229, 0.09),
+        0 4px 14px -2px rgba(15, 23, 42, 0.04),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 1);
+
     --ease-240: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -23,12 +41,15 @@
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-base);
     background-image: 
-        radial-gradient(circle at 10% 5%, rgba(99, 102, 241, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.09) 0%, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.12) 0px, transparent 45%),
+        radial-gradient(at 50% 45%, rgba(244, 114, 182, 0.07) 0px, transparent 55%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.09) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
     background-attachment: fixed;
-    color: var(--text-main);
+    color: var(--text-primary);
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -41,13 +62,13 @@ body {
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 13px;
     padding-bottom: 40px;
     transform: translate3d(0, 0, 0);
 }
 
 /* ======================================================== */
-/* 1. HEADER & SUBTLE DISCREET BRANDING                     */
+/* 1. ANDROID 17 GLASS HEADER & DISCREET BRANDING           */
 /* ======================================================== */
 .app-header {
     display: flex;
@@ -69,102 +90,107 @@ body {
 }
 
 .logo-gem {
-    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
     color: #fff;
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
 }
 
 .brand-title {
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: -0.4px;
-    background: linear-gradient(90deg, #f1f5f9, #cbd5e1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: -0.6px;
+    color: var(--text-primary);
 }
 
 .hz-tag {
     background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: var(--accent-emerald);
     font-size: 9.5px;
     font-weight: 800;
-    padding: 2px 6px;
-    border-radius: 5px;
+    padding: 2px 7px;
+    border-radius: 6px;
     letter-spacing: 0.5px;
 }
 
-/* Subtle, tasteful Anoop Kumar credit (not disturbing!) */
+/* Subtle, tasteful Anoop Kumar credit (Light Glass Pill) */
 .creator-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    padding: 2.5px 9px;
     border-radius: 12px;
     width: fit-content;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
 }
 
 .rgb-mini-pulse {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #00ffff;
-    box-shadow: 0 0 6px #00ffff;
+    background: #0284c7;
+    box-shadow: 0 0 6px rgba(2, 132, 199, 0.6);
     animation: rgb-dot 2.5s infinite alternate;
 }
 
 @keyframes rgb-dot {
-    0% { background: #ff0055; box-shadow: 0 0 6px #ff0055; }
-    50% { background: #00ff88; box-shadow: 0 0 6px #00ff88; }
-    100% { background: #00ccff; box-shadow: 0 0 6px #00ccff; }
+    0% { background: #e11d48; box-shadow: 0 0 6px #e11d48; }
+    50% { background: #059669; box-shadow: 0 0 6px #059669; }
+    100% { background: #0284c7; box-shadow: 0 0 6px #0284c7; }
 }
 
 .creator-text {
     font-size: 11px;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-weight: 700;
+    color: var(--text-secondary);
 }
 
 .btn-undo-subtle {
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
-    padding: 7px 13px;
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-radius: 18px;
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(12px);
     transition: transform 0.12s var(--ease-240), background 0.15s;
 }
 
 .btn-undo-subtle:active {
-    transform: scale(0.93);
-    background: #334155;
+    transform: scale(0.94);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 /* ======================================================== */
-/* 2. VISUAL FLOW STEPPER PIPELINE                          */
+/* 2. ANDROID 17 GLASS FLOW STEPPER                         */
 /* ======================================================== */
 .flow-stepper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(11, 17, 31, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
     padding: 8px 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--glass-shadow);
 }
 
 .step-item {
@@ -180,58 +206,63 @@ body {
 }
 
 .step-dot {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background: #1e293b;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(203, 213, 225, 0.8);
+    color: var(--text-secondary);
     font-size: 10px;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
 }
 
 .step-item.active .step-dot {
-    background: var(--primary);
-    border-color: var(--primary-light);
+    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    border-color: transparent;
     color: #fff;
-    box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
 }
 
 .step-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: #f1f5f9;
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--text-primary);
 }
 
 .step-track {
     flex: 1;
     height: 2px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(203, 213, 225, 0.5);
     margin: 0 10px;
     position: relative;
-    overflow: hidden;
+    border-radius: 2px;
 }
 
 .step-track.filled {
-    background: var(--primary);
+    background: linear-gradient(90deg, #4f46e5, #0ea5e9);
 }
 
 /* ======================================================== */
-/* 3. FLOW STAGE CARDS                                      */
+/* 3. ANDROID 17 LIQUID GLASS CARDS                         */
 /* ======================================================== */
 .flow-card {
-    background: var(--card-bg);
+    background: var(--card-glass);
     border: 1px solid var(--card-border);
-    border-radius: 18px;
+    border-radius: 22px;
     padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    box-shadow: var(--glass-shadow);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s var(--ease-240), box-shadow 0.2s;
 }
 
 .flow-card-head {
@@ -244,11 +275,11 @@ body {
 .flow-stage-tag {
     font-size: 9.5px;
     font-weight: 800;
-    color: var(--accent-cyan);
-    background: rgba(6, 182, 212, 0.12);
-    border: 1px solid rgba(6, 182, 212, 0.28);
-    padding: 2px 7px;
-    border-radius: 5px;
+    color: #0369a1;
+    background: rgba(14, 165, 233, 0.12);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    padding: 2.5px 8px;
+    border-radius: 6px;
     letter-spacing: 0.5px;
 }
 
@@ -260,41 +291,42 @@ body {
 }
 
 .flow-card-title {
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 800;
-    color: #e2e8f0;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
 }
 
 .stats-badge {
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 700;
-    color: #38bdf8;
-    background: rgba(56, 189, 248, 0.1);
-    padding: 2px 7px;
+    color: #4338ca;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 2.5px 8px;
     border-radius: 8px;
 }
 
 .btn-link {
     background: none;
     border: none;
-    color: var(--text-dim);
-    font-size: 11.5px;
+    color: var(--primary);
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .btn-link:active {
-    color: #fff;
+    opacity: 0.6;
 }
 
 .flow-stage-desc {
-    font-size: 11.5px;
+    font-size: 12px;
     color: var(--text-muted);
     line-height: 1.4;
 }
 
 /* ======================================================== */
-/* STAGE 1: SOURCE PRESETS & DISPLAY                        */
+/* STAGE 1: SOURCE PRESETS & FROSTED DISPLAY                */
 /* ======================================================== */
 .source-presets {
     display: flex;
@@ -304,9 +336,9 @@ body {
 }
 
 .preset-chip {
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--card-border-subtle);
+    color: var(--text-secondary);
     padding: 7px 12px;
     border-radius: 12px;
     font-size: 11.5px;
@@ -316,13 +348,15 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
-    transition: transform 0.12s var(--ease-240), background 0.15s, border-color 0.15s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.12s var(--ease-240), background 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .preset-chip.active {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: rgba(99, 102, 241, 0.5);
-    color: #818cf8;
+    background: rgba(99, 102, 241, 0.12);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12);
 }
 
 .preset-chip:active {
@@ -333,20 +367,21 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(7, 11, 20, 0.85);
-    border: 1px dashed rgba(99, 102, 241, 0.35);
-    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(99, 102, 241, 0.22);
+    border-radius: 16px;
     padding: 12px 14px;
     cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     transition: border-color 0.2s, background 0.15s;
 }
 
 .source-display-box:active {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(255, 255, 255, 0.98);
 }
 
 .source-icon {
-    font-size: 24px;
+    font-size: 26px;
 }
 
 .source-info {
@@ -365,9 +400,9 @@ body {
 }
 
 .source-path {
-    font-size: 13px;
-    font-weight: 700;
-    color: #38bdf8;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -376,10 +411,11 @@ body {
 .source-chevron {
     color: var(--text-dim);
     font-size: 18px;
+    font-weight: 700;
 }
 
 /* ======================================================== */
-/* STAGE 2: CATEGORY ROUTING PIPELINE (FLOW UI)            */
+/* STAGE 2: GLASS FLOW PIPELINE (ORIGIN ➔ TARGET)           */
 /* ======================================================== */
 .flow-pipeline-container {
     display: flex;
@@ -391,12 +427,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(8, 13, 24, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 13px;
-    padding: 9px 12px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 10px 12px;
     gap: 8px;
-    transition: transform 0.12s var(--ease-240), border-color 0.15s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.12s var(--ease-240), box-shadow 0.15s;
 }
 
 /* Origin Node (Left) */
@@ -404,11 +441,11 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    min-width: 120px;
+    min-width: 125px;
 }
 
 .flow-cat-icon {
-    font-size: 19px;
+    font-size: 20px;
 }
 
 .flow-cat-meta {
@@ -417,40 +454,39 @@ body {
 }
 
 .flow-cat-name {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 800;
-    color: #f1f5f9;
+    color: var(--text-primary);
 }
 
 .flow-cat-count {
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 700;
 }
 
-/* Connector Stream (Center) */
+/* Flow Stream Connector (Center) */
 .flow-stream-connector {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-dim);
+    color: var(--primary);
     font-size: 12px;
     font-weight: 800;
-    opacity: 0.6;
 }
 
 .flow-stream-arrow {
-    color: #6366f1;
     font-size: 13px;
+    color: var(--primary);
     animation: flowPulse 2s infinite ease-in-out;
 }
 
 @keyframes flowPulse {
-    0% { transform: translateX(-2px); opacity: 0.5; }
+    0% { transform: translateX(-2px); opacity: 0.6; }
     50% { transform: translateX(2px); opacity: 1; }
-    100% { transform: translateX(-2px); opacity: 0.5; }
+    100% { transform: translateX(-2px); opacity: 0.6; }
 }
 
-/* Destination Node (Right - Interactive Folder Target) */
+/* Destination Target Pill (Right - Frosted Glass Button) */
 .flow-target-node {
     flex: 1;
     display: flex;
@@ -461,23 +497,24 @@ body {
 }
 
 .target-folder-pill {
-    background: rgba(22, 33, 56, 0.7);
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    padding: 6px 10px;
-    border-radius: 8px;
+    background: rgba(238, 242, 255, 0.85);
+    border: 1px solid rgba(99, 102, 241, 0.22);
+    padding: 6px 11px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     cursor: pointer;
     overflow: hidden;
     max-width: 100%;
+    box-shadow: 0 1px 4px rgba(79, 70, 229, 0.06);
     transition: background 0.15s, border-color 0.15s, transform 0.1s var(--ease-240);
 }
 
 .target-folder-pill:active {
     transform: scale(0.96);
-    background: rgba(30, 45, 75, 0.9);
-    border-color: #38bdf8;
+    background: rgba(224, 231, 255, 0.95);
+    border-color: var(--primary);
 }
 
 .target-folder-icon {
@@ -485,9 +522,9 @@ body {
 }
 
 .target-folder-text {
-    font-size: 11.5px;
-    font-weight: 700;
-    color: #38bdf8;
+    font-size: 12px;
+    font-weight: 800;
+    color: #4338ca;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -499,7 +536,7 @@ body {
 }
 
 /* ======================================================== */
-/* STAGE 3: OPTIONS & EXECUTION                             */
+/* STAGE 3: OPTIONS & FLOW EXECUTION                        */
 /* ======================================================== */
 .options-grid {
     display: grid;
@@ -508,14 +545,15 @@ body {
 }
 
 .option-pill {
-    background: rgba(8, 13, 24, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
 }
 
 .option-meta {
@@ -527,15 +565,15 @@ body {
 .opt-title {
     font-size: 11px;
     font-weight: 800;
-    color: #e2e8f0;
+    color: var(--text-primary);
 }
 
 .opt-desc {
     font-size: 9.5px;
-    color: var(--text-dim);
+    color: var(--text-muted);
 }
 
-/* Switch */
+/* Switch Input */
 .switch {
     position: relative;
     display: inline-block;
@@ -553,7 +591,7 @@ body {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #334155;
+    background-color: #cbd5e1;
     transition: .2s var(--ease-240);
     border-radius: 20px;
 }
@@ -568,42 +606,46 @@ body {
     background-color: white;
     transition: .2s var(--ease-240);
     border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 input:checked + .slider {
-    background-color: var(--primary-light);
+    background-color: var(--primary);
 }
 
 input:checked + .slider:before {
     transform: translateX(16px);
 }
 
-/* Flow Execution Progress */
+/* Flow Execution Progress Card */
 .flow-progress-card {
-    background: rgba(14, 21, 38, 0.95);
-    border: 1px solid rgba(99, 102, 241, 0.4);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 14px;
     padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.08);
 }
 
 .progress-meta {
     display: flex;
     justify-content: space-between;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 800;
+    color: var(--text-primary);
 }
 
 .pct-glow {
-    color: #38bdf8;
+    color: var(--primary);
+    font-weight: 900;
 }
 
 .progress-track {
     width: 100%;
     height: 8px;
-    background: rgba(30, 41, 59, 0.8);
+    background: rgba(226, 232, 240, 0.8);
     border-radius: 5px;
     overflow: hidden;
 }
@@ -611,7 +653,7 @@ input:checked + .slider:before {
 .progress-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #38bdf8, #6366f1, #38bdf8);
+    background: linear-gradient(90deg, #4f46e5, #0ea5e9, #4f46e5);
     background-size: 200% 200%;
     animation: flow-shine 1.5s linear infinite;
     transition: width 0.12s var(--ease-240);
@@ -623,14 +665,14 @@ input:checked + .slider:before {
 }
 
 .progress-stream-file {
-    font-size: 10.5px;
-    color: #94a3b8;
+    font-size: 11px;
+    color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* Action Trigger Buttons */
+/* Flow Execution Action Buttons */
 .flow-actions {
     display: flex;
     flex-direction: column;
@@ -639,19 +681,19 @@ input:checked + .slider:before {
 }
 
 .btn-flow-primary {
-    background: linear-gradient(90deg, #4f46e5, #6366f1);
+    background: linear-gradient(135deg, #4f46e5, #0284c7);
     color: #fff;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 15px;
-    border-radius: 14px;
-    font-size: 14.5px;
+    border-radius: 16px;
+    font-size: 15px;
     font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+    box-shadow: 0 10px 24px -4px rgba(79, 70, 229, 0.35);
     transition: transform 0.12s var(--ease-240), box-shadow 0.2s;
 }
 
@@ -673,20 +715,21 @@ input:checked + .slider:before {
 }
 
 .btn-flow-secondary {
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--card-border-subtle);
+    color: var(--text-secondary);
     padding: 11px;
-    border-radius: 12px;
-    font-size: 12.5px;
-    font-weight: 700;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 800;
     cursor: pointer;
-    transition: transform 0.12s var(--ease-240);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.12s var(--ease-240), background 0.15s;
 }
 
 .btn-flow-secondary:active {
     transform: scale(0.97);
-    background: #334155;
+    background: rgba(255, 255, 255, 0.9);
 }
 
 /* ======================================================== */
@@ -710,15 +753,15 @@ input:checked + .slider:before {
 }
 
 .footer-creds strong {
-    color: #cbd5e1;
+    color: var(--text-secondary);
 }
 
 .footer-rgb-dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #38bdf8;
-    box-shadow: 0 0 6px #38bdf8;
+    background: #0284c7;
+    box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
 }
 
 .footer-sub {
@@ -730,14 +773,15 @@ input:checked + .slider:before {
 /* 5. PERMISSION CARD                                       */
 /* ======================================================== */
 .perm-card {
-    background: rgba(245, 158, 11, 0.1);
+    background: rgba(254, 243, 199, 0.7);
     border: 1px solid rgba(245, 158, 11, 0.35);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 12px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    backdrop-filter: blur(16px);
 }
 
 .perm-left {
@@ -754,12 +798,12 @@ input:checked + .slider:before {
 .perm-title {
     font-size: 12.5px;
     font-weight: 800;
-    color: #fde68a;
+    color: #92400e;
 }
 
 .perm-sub {
-    font-size: 10.5px;
-    color: #cbd5e1;
+    font-size: 11px;
+    color: #78350f;
     line-height: 1.3;
 }
 
@@ -767,12 +811,13 @@ input:checked + .slider:before {
     background: #f59e0b;
     color: #000;
     border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 8px 13px;
+    border-radius: 10px;
     font-size: 11.5px;
     font-weight: 800;
     cursor: pointer;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
 .btn-perm-grant:active {
@@ -780,14 +825,14 @@ input:checked + .slider:before {
 }
 
 /* ======================================================== */
-/* 6. IN-APP FOLDER PICKER MODAL                            */
+/* 6. ANDROID 17 FROSTED GLASS FOLDER PICKER MODAL          */
 /* ======================================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(15, 23, 42, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 2000;
     display: flex;
     justify-content: center;
@@ -802,17 +847,19 @@ input:checked + .slider:before {
 }
 
 .modal-card {
-    background: #0e1424;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
     width: 100%;
     max-width: 520px;
     height: 82vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.85);
+    box-shadow: 0 -15px 45px rgba(15, 23, 42, 0.15);
     overflow: hidden;
+    backdrop-filter: blur(35px) saturate(200%);
+    -webkit-backdrop-filter: blur(35px) saturate(200%);
     animation: slideUp 0.2s var(--ease-240);
 }
 
@@ -823,7 +870,7 @@ input:checked + .slider:before {
 
 @media (min-width: 540px) {
     .modal-card {
-        border-radius: 20px;
+        border-radius: 24px;
         height: 75vh;
     }
 }
@@ -832,8 +879,8 @@ input:checked + .slider:before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.7);
 }
 
 .modal-header-meta {
@@ -843,19 +890,19 @@ input:checked + .slider:before {
 }
 
 .modal-icon {
-    font-size: 17px;
+    font-size: 18px;
 }
 
 .modal-title {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
-    color: #f1f5f9;
+    color: var(--text-primary);
 }
 
 .btn-close-modal {
-    background: rgba(255, 255, 255, 0.08);
-    border: none;
-    color: #cbd5e1;
+    background: rgba(241, 245, 249, 0.8);
+    border: 1px solid rgba(203, 213, 225, 0.5);
+    color: var(--text-secondary);
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -872,54 +919,60 @@ input:checked + .slider:before {
     gap: 6px;
     padding: 8px 14px;
     overflow-x: auto;
-    background: rgba(6, 10, 18, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(248, 250, 252, 0.75);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
 
 .chip {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #cbd5e1;
-    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(203, 213, 225, 0.7);
+    color: var(--text-secondary);
+    padding: 6px 11px;
     border-radius: 12px;
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
     cursor: pointer;
     flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .chip:active {
-    background: #38bdf8;
-    color: #000;
+    background: #e0f2fe;
+    border-color: #0284c7;
+    color: #0369a1;
 }
 
 .breadcrumbs-bar {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 9px 14px;
-    background: rgba(10, 15, 26, 0.9);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 14px;
+    background: rgba(248, 250, 252, 0.85);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
 }
 
 .btn-up-dir {
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #e5e7eb;
-    padding: 4px 9px;
-    border-radius: 6px;
-    font-size: 11px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(203, 213, 225, 0.8);
+    color: var(--text-secondary);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 11.5px;
     font-weight: 800;
     cursor: pointer;
     flex-shrink: 0;
 }
 
+.btn-up-dir:active {
+    transform: scale(0.92);
+}
+
 .breadcrumb-path {
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 700;
-    color: #38bdf8;
+    color: var(--primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -931,34 +984,35 @@ input:checked + .slider:before {
     padding: 8px 12px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
 }
 
 .folder-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: 11px 13px;
+    border-radius: 12px;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     transition: background 0.12s var(--ease-240);
 }
 
 .folder-item:active {
-    background: rgba(99, 102, 241, 0.15);
-    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(238, 242, 255, 0.95);
+    border-color: rgba(99, 102, 241, 0.4);
 }
 
 .folder-item-icon {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .folder-item-name {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
-    color: #f3f4f6;
+    color: var(--text-primary);
     flex: 1;
     white-space: nowrap;
     overflow: hidden;
@@ -967,32 +1021,33 @@ input:checked + .slider:before {
 
 .folder-item-chevron {
     color: var(--text-dim);
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .loading-folders, .empty-folders {
     text-align: center;
     color: var(--text-muted);
-    font-size: 12.5px;
-    padding: 30px 10px;
+    font-size: 13px;
+    padding: 35px 10px;
 }
 
 .modal-footer {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 14px;
-    background: rgba(8, 12, 22, 0.95);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px 14px;
+    background: rgba(248, 250, 252, 0.9);
+    border-top: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .btn-new-folder {
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #cbd5e1;
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 11.5px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(203, 213, 225, 0.8);
+    color: var(--text-secondary);
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: 800;
     cursor: pointer;
     white-space: nowrap;
@@ -1000,15 +1055,16 @@ input:checked + .slider:before {
 
 .btn-select-current {
     flex: 1;
-    background: linear-gradient(90deg, #10b981, #059669);
-    border: none;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: #fff;
-    padding: 11px 14px;
-    border-radius: 10px;
-    font-size: 12.5px;
-    font-weight: 900;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 800;
     cursor: pointer;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
     transition: transform 0.12s var(--ease-240);
 }
 
@@ -1016,20 +1072,21 @@ input:checked + .slider:before {
     transform: scale(0.97);
 }
 
-/* Toast */
+/* Toast (Frosted Glass Pill) */
 #toast {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(120px);
-    background: #0f172a;
-    border: 1px solid rgba(99, 102, 241, 0.4);
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-size: 12px;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 12.5px;
     font-weight: 700;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(16px);
     transition: transform 0.22s var(--ease-240);
     z-index: 3000;
     max-width: 90vw;

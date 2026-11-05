@@ -75,7 +75,8 @@ function renderPipeline() {
         const row = document.createElement('div');
         row.className = 'flow-node-row';
         if (data.count > 0) {
-            row.style.borderColor = data.color + '44';
+            row.style.borderColor = data.color + '55';
+            row.style.boxShadow = '0 4px 14px ' + data.color + '1a';
         }
 
         row.innerHTML = `

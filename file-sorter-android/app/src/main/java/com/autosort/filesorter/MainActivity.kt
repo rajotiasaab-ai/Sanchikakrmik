@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.view.View
+import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.graphics.Color
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -39,9 +41,11 @@ class MainActivity : Activity() {
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
         )
         optimizeDisplayRefreshRate()
+        configureEdgeToEdgeLightSystemBars()
 
         webView = WebView(this).apply {
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            setBackgroundColor(Color.TRANSPARENT)
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.allowFileAccess = true
@@ -63,7 +67,29 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         optimizeDisplayRefreshRate()
+        configureEdgeToEdgeLightSystemBars()
         checkAndNotifyPermission()
+    }
+
+    private fun configureEdgeToEdgeLightSystemBars() {
+        try {
+            window.statusBarColor = Color.TRANSPARENT
+            window.navigationBarColor = Color.TRANSPARENT
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                window.insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                )
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                @Suppress("DEPRECATION")
+                var flags = window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                }
+                window.decorView.systemUiVisibility = flags
+            }
+        } catch (ignored: Exception) {}
     }
 
     private fun optimizeDisplayRefreshRate() {
