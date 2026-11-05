@@ -1,33 +1,40 @@
 :root {
-    /* Android 17 Liquid Glass Light System */
-    --bg-base: #f5f7fb;
-    --card-glass: rgba(255, 255, 255, 0.65);
-    --card-glass-hover: rgba(255, 255, 255, 0.82);
-    --card-border: rgba(255, 255, 255, 0.92);
-    --card-border-subtle: rgba(226, 232, 240, 0.6);
-    --glass-highlight: rgba(255, 255, 255, 0.95);
+    /* iOS 18/19 & Android 17 Unified Fluid Glass Design System */
+    --bg-base: #f5f6fa;
+    --card-glass: rgba(255, 255, 255, 0.72);
+    --card-glass-hover: rgba(255, 255, 255, 0.88);
+    --card-border: rgba(255, 255, 255, 0.95);
+    --card-border-subtle: rgba(226, 232, 240, 0.7);
     
-    --primary: #4f46e5;
-    --primary-light: #6366f1;
-    --primary-soft: #eef2ff;
-    --accent-cyan: #0284c7;
-    --accent-emerald: #059669;
+    /* Apple System Colors */
+    --ios-blue: #007aff;
+    --ios-blue-gradient: linear-gradient(180deg, #007aff 0%, #0062d2 100%);
+    --ios-green: #34c759;
+    --ios-indigo: #5856d6;
+    --ios-teal: #30b0c7;
+    --ios-orange: #ff9500;
+    --ios-gray-fill: rgba(120, 120, 128, 0.12);
+    --ios-separator: rgba(60, 60, 67, 0.12);
 
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
-    --text-dim: #94a3b8;
+    /* Typography (SF Pro Hierarchy) */
+    --text-primary: #1d1d1f;
+    --text-secondary: #424245;
+    --text-muted: #86868b;
+    --text-dim: #a1a1a6;
 
-    --glass-shadow: 
-        0 10px 30px -6px rgba(15, 23, 42, 0.05),
-        0 4px 12px -2px rgba(15, 23, 42, 0.03),
+    /* Apple Depth & Soft Ambient Shadows */
+    --ios-shadow-card: 
+        0 12px 34px -6px rgba(0, 0, 0, 0.04),
+        0 4px 12px -2px rgba(0, 0, 0, 0.02),
         inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
 
-    --glass-shadow-active:
-        0 16px 36px -4px rgba(79, 70, 229, 0.09),
-        0 4px 14px -2px rgba(15, 23, 42, 0.04),
+    --ios-shadow-active:
+        0 18px 40px -4px rgba(0, 122, 255, 0.12),
+        0 6px 16px -2px rgba(0, 0, 0, 0.04),
         inset 0 1px 1px 0 rgba(255, 255, 255, 1);
 
+    /* iOS Fluid Spring Physics */
+    --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
     --ease-240: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -35,7 +42,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
 }
@@ -43,11 +50,11 @@
 body {
     background-color: var(--bg-base);
     background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.12) 0px, transparent 45%),
-        radial-gradient(at 50% 45%, rgba(244, 114, 182, 0.07) 0px, transparent 55%),
-        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.09) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.08) 0px, transparent 48%),
+        radial-gradient(at 100% 0%, rgba(48, 176, 199, 0.09) 0px, transparent 45%),
+        radial-gradient(at 50% 50%, rgba(88, 86, 214, 0.05) 0px, transparent 55%),
+        radial-gradient(at 100% 100%, rgba(52, 199, 89, 0.07) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(175, 82, 222, 0.06) 0px, transparent 50%);
     background-attachment: fixed;
     color: var(--text-primary);
     display: flex;
@@ -68,7 +75,7 @@ body {
 }
 
 /* ======================================================== */
-/* 1. ANDROID 17 GLASS HEADER & DISCREET BRANDING           */
+/* 1. iOS + ANDROID 17 HEADER WITH ELEGANT SQUIRCLE PILL    */
 /* ======================================================== */
 .app-header {
     display: flex;
@@ -90,68 +97,69 @@ body {
 }
 
 .logo-gem {
-    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    background: linear-gradient(135deg, #007aff, #30b0c7);
     color: #fff;
     width: 26px;
     height: 26px;
-    border-radius: 8px;
+    border-radius: 8px; /* iOS Continuous Squircle */
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
 }
 
 .brand-title {
     font-size: 21px;
-    font-weight: 900;
-    letter-spacing: -0.6px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
     color: var(--text-primary);
 }
 
 .hz-tag {
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.28);
-    color: var(--accent-emerald);
+    background: rgba(52, 199, 89, 0.12);
+    border: 1px solid rgba(52, 199, 89, 0.3);
+    color: var(--ios-green);
     font-size: 9.5px;
     font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 6px;
+    padding: 2.5px 7px;
+    border-radius: 7px;
     letter-spacing: 0.5px;
 }
 
-/* Subtle, tasteful Anoop Kumar credit (Light Glass Pill) */
+/* Discreet Anoop Kumar branding badge */
 .creator-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.95);
     padding: 2.5px 9px;
     border-radius: 12px;
     width: fit-content;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .rgb-mini-pulse {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #0284c7;
-    box-shadow: 0 0 6px rgba(2, 132, 199, 0.6);
+    background: var(--ios-blue);
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.5);
     animation: rgb-dot 2.5s infinite alternate;
 }
 
 @keyframes rgb-dot {
-    0% { background: #e11d48; box-shadow: 0 0 6px #e11d48; }
-    50% { background: #059669; box-shadow: 0 0 6px #059669; }
-    100% { background: #0284c7; box-shadow: 0 0 6px #0284c7; }
+    0% { background: #ff2d55; box-shadow: 0 0 6px #ff2d55; }
+    50% { background: #34c759; box-shadow: 0 0 6px #34c759; }
+    100% { background: #007aff; box-shadow: 0 0 6px #007aff; }
 }
 
 .creator-text {
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-secondary);
 }
 
@@ -167,38 +175,39 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(12px);
-    transition: transform 0.12s var(--ease-240), background 0.15s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: transform 0.12s var(--ease-spring), background 0.15s;
 }
 
 .btn-undo-subtle:active {
     transform: scale(0.94);
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
 }
 
 /* ======================================================== */
-/* 2. ANDROID 17 GLASS FLOW STEPPER                         */
+/* 2. iOS STEPPER (CAPSULE SEGMENTED FLOW)                  */
 /* ======================================================== */
 .flow-stepper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.65);
     border: 1px solid var(--card-border);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 8px 16px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    box-shadow: var(--ios-shadow-card);
 }
 
 .step-item {
     display: flex;
     align-items: center;
     gap: 6px;
-    opacity: 0.5;
-    transition: opacity 0.2s, transform 0.2s;
+    opacity: 0.45;
+    transition: opacity 0.25s var(--ease-spring), transform 0.25s;
 }
 
 .step-item.active {
@@ -212,7 +221,7 @@ body {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(203, 213, 225, 0.8);
     color: var(--text-secondary);
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 800;
     display: flex;
     align-items: center;
@@ -221,15 +230,15 @@ body {
 }
 
 .step-item.active .step-dot {
-    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    background: var(--ios-blue-gradient);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.35);
 }
 
 .step-label {
     font-size: 11.5px;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text-primary);
 }
 
@@ -238,31 +247,30 @@ body {
     height: 2px;
     background: rgba(203, 213, 225, 0.5);
     margin: 0 10px;
-    position: relative;
     border-radius: 2px;
 }
 
 .step-track.filled {
-    background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+    background: var(--ios-blue-gradient);
 }
 
 /* ======================================================== */
-/* 3. ANDROID 17 LIQUID GLASS CARDS                         */
+/* 3. iOS INSET GROUPED LIQUID GLASS CARDS                  */
 /* ======================================================== */
 .flow-card {
     background: var(--card-glass);
     border: 1px solid var(--card-border);
-    border-radius: 22px;
-    padding: 16px;
+    border-radius: 26px; /* iOS Continuous Squircle */
+    padding: 16px 18px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    backdrop-filter: blur(28px) saturate(190%);
-    -webkit-backdrop-filter: blur(28px) saturate(190%);
-    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(35px) saturate(210%);
+    -webkit-backdrop-filter: blur(35px) saturate(210%);
+    box-shadow: var(--ios-shadow-card);
     position: relative;
     overflow: hidden;
-    transition: transform 0.15s var(--ease-240), box-shadow 0.2s;
+    transition: transform 0.15s var(--ease-spring), box-shadow 0.2s;
 }
 
 .flow-card-head {
@@ -275,11 +283,11 @@ body {
 .flow-stage-tag {
     font-size: 9.5px;
     font-weight: 800;
-    color: #0369a1;
-    background: rgba(14, 165, 233, 0.12);
-    border: 1px solid rgba(14, 165, 233, 0.25);
+    color: var(--ios-blue);
+    background: rgba(0, 122, 255, 0.1);
+    border: 1px solid rgba(0, 122, 255, 0.22);
     padding: 2.5px 8px;
-    border-radius: 6px;
+    border-radius: 7px;
     letter-spacing: 0.5px;
 }
 
@@ -291,7 +299,7 @@ body {
 }
 
 .flow-card-title {
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 800;
     color: var(--text-primary);
     letter-spacing: -0.3px;
@@ -300,8 +308,8 @@ body {
 .stats-badge {
     font-size: 10.5px;
     font-weight: 700;
-    color: #4338ca;
-    background: rgba(99, 102, 241, 0.1);
+    color: var(--ios-indigo);
+    background: rgba(88, 86, 214, 0.1);
     padding: 2.5px 8px;
     border-radius: 8px;
 }
@@ -309,67 +317,68 @@ body {
 .btn-link {
     background: none;
     border: none;
-    color: var(--primary);
-    font-size: 12px;
+    color: var(--ios-blue);
+    font-size: 12.5px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .btn-link:active {
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 .flow-stage-desc {
     font-size: 12px;
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 /* ======================================================== */
-/* STAGE 1: SOURCE PRESETS & FROSTED DISPLAY                */
+/* STAGE 1: iOS SEGMENTED CONTROL PRESETS & DISPLAY         */
 /* ======================================================== */
 .source-presets {
+    background: var(--ios-gray-fill);
+    padding: 3px;
+    border-radius: 14px; /* iOS Segmented Capsule */
     display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 2px;
+    gap: 3px;
 }
 
 .preset-chip {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid var(--card-border-subtle);
+    flex: 1;
+    background: transparent;
+    border: none;
     color: var(--text-secondary);
-    padding: 7px 12px;
-    border-radius: 12px;
+    padding: 7px 6px;
+    border-radius: 11px;
     font-size: 11.5px;
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: 5px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-    transition: transform 0.12s var(--ease-240), background 0.15s, border-color 0.15s, color 0.15s;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s var(--ease-spring);
 }
 
 .preset-chip.active {
-    background: rgba(99, 102, 241, 0.12);
-    border-color: rgba(99, 102, 241, 0.4);
-    color: var(--primary);
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12);
+    background: #ffffff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    color: var(--ios-blue);
 }
 
 .preset-chip:active {
-    transform: scale(0.95);
+    transform: scale(0.97);
 }
 
 .source-display-box {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(99, 102, 241, 0.22);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 18px;
     padding: 12px 14px;
     cursor: pointer;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
@@ -402,7 +411,7 @@ body {
 .source-path {
     font-size: 13.5px;
     font-weight: 800;
-    color: var(--primary);
+    color: var(--ios-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -415,7 +424,7 @@ body {
 }
 
 /* ======================================================== */
-/* STAGE 2: GLASS FLOW PIPELINE (ORIGIN ➔ TARGET)           */
+/* STAGE 2: iOS INSET GROUPED PIPELINE NODES                */
 /* ======================================================== */
 .flow-pipeline-container {
     display: flex;
@@ -427,20 +436,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    padding: 10px 12px;
+    border-radius: 16px;
+    padding: 10px 14px;
     gap: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    transition: transform 0.12s var(--ease-240), box-shadow 0.15s;
+    transition: transform 0.12s var(--ease-spring), box-shadow 0.15s;
 }
 
 /* Origin Node (Left) */
 .flow-origin-node {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     min-width: 125px;
 }
 
@@ -469,14 +478,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary);
+    color: var(--ios-blue);
     font-size: 12px;
     font-weight: 800;
 }
 
 .flow-stream-arrow {
     font-size: 13px;
-    color: var(--primary);
+    color: var(--ios-blue);
     animation: flowPulse 2s infinite ease-in-out;
 }
 
@@ -486,7 +495,7 @@ body {
     100% { transform: translateX(-2px); opacity: 0.6; }
 }
 
-/* Destination Target Pill (Right - Frosted Glass Button) */
+/* Destination Target Pill (Right - iOS Pill Button) */
 .flow-target-node {
     flex: 1;
     display: flex;
@@ -497,24 +506,24 @@ body {
 }
 
 .target-folder-pill {
-    background: rgba(238, 242, 255, 0.85);
-    border: 1px solid rgba(99, 102, 241, 0.22);
-    padding: 6px 11px;
-    border-radius: 10px;
+    background: rgba(235, 245, 255, 0.88);
+    border: 1px solid rgba(0, 122, 255, 0.22);
+    padding: 6px 12px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
     overflow: hidden;
     max-width: 100%;
-    box-shadow: 0 1px 4px rgba(79, 70, 229, 0.06);
-    transition: background 0.15s, border-color 0.15s, transform 0.1s var(--ease-240);
+    box-shadow: 0 1px 4px rgba(0, 122, 255, 0.08);
+    transition: background 0.15s, border-color 0.15s, transform 0.1s var(--ease-spring);
 }
 
 .target-folder-pill:active {
     transform: scale(0.96);
-    background: rgba(224, 231, 255, 0.95);
-    border-color: var(--primary);
+    background: rgba(215, 235, 255, 0.98);
+    border-color: var(--ios-blue);
 }
 
 .target-folder-icon {
@@ -524,7 +533,7 @@ body {
 .target-folder-text {
     font-size: 12px;
     font-weight: 800;
-    color: #4338ca;
+    color: var(--ios-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -536,7 +545,7 @@ body {
 }
 
 /* ======================================================== */
-/* STAGE 3: OPTIONS & FLOW EXECUTION                        */
+/* STAGE 3: iOS TOGGLES & EXECUTION                         */
 /* ======================================================== */
 .options-grid {
     display: grid;
@@ -545,10 +554,10 @@ body {
 }
 
 .option-pill {
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.78);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 14px;
-    padding: 10px;
+    border-radius: 16px;
+    padding: 11px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -573,12 +582,12 @@ body {
     color: var(--text-muted);
 }
 
-/* Switch Input */
+/* Iconic iOS Toggle Switch (51x31 / 38x22) */
 .switch {
     position: relative;
     display: inline-block;
-    width: 36px;
-    height: 20px;
+    width: 38px;
+    height: 22px;
 }
 
 .switch input {
@@ -591,26 +600,26 @@ body {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #cbd5e1;
-    transition: .2s var(--ease-240);
-    border-radius: 20px;
+    background-color: rgba(120, 120, 128, 0.22);
+    transition: .25s var(--ease-spring);
+    border-radius: 22px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 14px;
-    width: 14px;
-    left: 3px;
-    bottom: 3px;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
     background-color: white;
-    transition: .2s var(--ease-240);
+    transition: .25s var(--ease-spring);
     border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.06);
 }
 
 input:checked + .slider {
-    background-color: var(--primary);
+    background-color: var(--ios-green); /* iOS System Green */
 }
 
 input:checked + .slider:before {
@@ -619,14 +628,14 @@ input:checked + .slider:before {
 
 /* Flow Execution Progress Card */
 .flow-progress-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    border-radius: 14px;
-    padding: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 122, 255, 0.3);
+    border-radius: 16px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.1);
 }
 
 .progress-meta {
@@ -638,14 +647,14 @@ input:checked + .slider:before {
 }
 
 .pct-glow {
-    color: var(--primary);
+    color: var(--ios-blue);
     font-weight: 900;
 }
 
 .progress-track {
     width: 100%;
     height: 8px;
-    background: rgba(226, 232, 240, 0.8);
+    background: rgba(226, 232, 240, 0.85);
     border-radius: 5px;
     overflow: hidden;
 }
@@ -653,7 +662,7 @@ input:checked + .slider:before {
 .progress-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #4f46e5, #0ea5e9, #4f46e5);
+    background: linear-gradient(90deg, #007aff, #30b0c7, #007aff);
     background-size: 200% 200%;
     animation: flow-shine 1.5s linear infinite;
     transition: width 0.12s var(--ease-240);
@@ -672,7 +681,7 @@ input:checked + .slider:before {
     text-overflow: ellipsis;
 }
 
-/* Flow Execution Action Buttons */
+/* iOS Floating Primary Action Button */
 .flow-actions {
     display: flex;
     flex-direction: column;
@@ -681,11 +690,11 @@ input:checked + .slider:before {
 }
 
 .btn-flow-primary {
-    background: linear-gradient(135deg, #4f46e5, #0284c7);
+    background: var(--ios-blue-gradient);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 15px;
-    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 16px;
+    border-radius: 18px; /* iOS Continuous Squircle */
     font-size: 15px;
     font-weight: 800;
     cursor: pointer;
@@ -693,8 +702,8 @@ input:checked + .slider:before {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 10px 24px -4px rgba(79, 70, 229, 0.35);
-    transition: transform 0.12s var(--ease-240), box-shadow 0.2s;
+    box-shadow: 0 10px 25px -4px rgba(0, 122, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    transition: transform 0.12s var(--ease-spring), box-shadow 0.2s;
 }
 
 .btn-flow-primary:active {
@@ -715,21 +724,21 @@ input:checked + .slider:before {
 }
 
 .btn-flow-secondary {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.75);
     border: 1px solid var(--card-border-subtle);
     color: var(--text-secondary);
-    padding: 11px;
-    border-radius: 14px;
+    padding: 12px;
+    border-radius: 16px;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-    transition: transform 0.12s var(--ease-240), background 0.15s;
+    transition: transform 0.12s var(--ease-spring), background 0.15s;
 }
 
 .btn-flow-secondary:active {
     transform: scale(0.97);
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 /* ======================================================== */
@@ -760,8 +769,8 @@ input:checked + .slider:before {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #0284c7;
-    box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
+    background: var(--ios-blue);
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.5);
 }
 
 .footer-sub {
@@ -773,9 +782,9 @@ input:checked + .slider:before {
 /* 5. PERMISSION CARD                                       */
 /* ======================================================== */
 .perm-card {
-    background: rgba(254, 243, 199, 0.7);
+    background: rgba(255, 249, 235, 0.85);
     border: 1px solid rgba(245, 158, 11, 0.35);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 12px 14px;
     display: flex;
     align-items: center;
@@ -808,8 +817,8 @@ input:checked + .slider:before {
 }
 
 .btn-perm-grant {
-    background: #f59e0b;
-    color: #000;
+    background: var(--ios-orange);
+    color: #fff;
     border: none;
     padding: 8px 13px;
     border-radius: 10px;
@@ -817,7 +826,7 @@ input:checked + .slider:before {
     font-weight: 800;
     cursor: pointer;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 2px 8px rgba(255, 149, 0, 0.3);
 }
 
 .btn-perm-grant:active {
@@ -825,14 +834,14 @@ input:checked + .slider:before {
 }
 
 /* ======================================================== */
-/* 6. ANDROID 17 FROSTED GLASS FOLDER PICKER MODAL          */
+/* 6. iOS SHEET PRESENTATION FOLDER PICKER MODAL            */
 /* ======================================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(15, 23, 42, 0.35);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 2000;
     display: flex;
     justify-content: center;
@@ -847,31 +856,44 @@ input:checked + .slider:before {
 }
 
 .modal-card {
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
     width: 100%;
     max-width: 520px;
     height: 82vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 -15px 45px rgba(15, 23, 42, 0.15);
+    box-shadow: 0 -15px 45px rgba(0, 0, 0, 0.12);
     overflow: hidden;
-    backdrop-filter: blur(35px) saturate(200%);
-    -webkit-backdrop-filter: blur(35px) saturate(200%);
-    animation: slideUp 0.2s var(--ease-240);
+    backdrop-filter: blur(40px) saturate(210%);
+    -webkit-backdrop-filter: blur(40px) saturate(210%);
+    animation: slideUp 0.25s var(--ease-spring);
+}
+
+/* iOS Pull-down Sheet Grabber Handle */
+.ios-sheet-grabber {
+    width: 36px;
+    height: 5px;
+    background: rgba(60, 60, 67, 0.22);
+    border-radius: 4px;
+    margin: 8px auto 2px auto;
+    flex-shrink: 0;
 }
 
 @keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0.8; }
+    from { transform: translateY(50px); opacity: 0.8; }
     to { transform: translateY(0); opacity: 1; }
 }
 
 @media (min-width: 540px) {
     .modal-card {
-        border-radius: 24px;
+        border-radius: 26px;
         height: 75vh;
+    }
+    .ios-sheet-grabber {
+        display: none;
     }
 }
 
@@ -879,8 +901,8 @@ input:checked + .slider:before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 18px;
-    border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+    padding: 10px 18px 12px 18px;
+    border-bottom: 1px solid var(--ios-separator);
 }
 
 .modal-header-meta {
@@ -900,8 +922,8 @@ input:checked + .slider:before {
 }
 
 .btn-close-modal {
-    background: rgba(241, 245, 249, 0.8);
-    border: 1px solid rgba(203, 213, 225, 0.5);
+    background: rgba(118, 118, 128, 0.12);
+    border: none;
     color: var(--text-secondary);
     width: 30px;
     height: 30px;
@@ -912,6 +934,11 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.12s;
+}
+
+.btn-close-modal:active {
+    transform: scale(0.9);
 }
 
 .quick-shortcuts {
@@ -920,13 +947,13 @@ input:checked + .slider:before {
     padding: 8px 14px;
     overflow-x: auto;
     background: rgba(248, 250, 252, 0.75);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    border-bottom: 1px solid var(--ios-separator);
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
 
 .chip {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.88);
     border: 1px solid rgba(203, 213, 225, 0.7);
     color: var(--text-secondary);
     padding: 6px 11px;
@@ -939,9 +966,9 @@ input:checked + .slider:before {
 }
 
 .chip:active {
-    background: #e0f2fe;
-    border-color: #0284c7;
-    color: #0369a1;
+    background: rgba(0, 122, 255, 0.1);
+    border-color: var(--ios-blue);
+    color: var(--ios-blue);
 }
 
 .breadcrumbs-bar {
@@ -950,11 +977,11 @@ input:checked + .slider:before {
     gap: 8px;
     padding: 10px 14px;
     background: rgba(248, 250, 252, 0.85);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    border-bottom: 1px solid var(--ios-separator);
 }
 
 .btn-up-dir {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(203, 213, 225, 0.8);
     color: var(--text-secondary);
     padding: 5px 10px;
@@ -972,7 +999,7 @@ input:checked + .slider:before {
 .breadcrumb-path {
     font-size: 12px;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--ios-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -991,18 +1018,18 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 11px 13px;
-    border-radius: 12px;
+    padding: 11px 14px;
+    border-radius: 14px;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.95);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    transition: background 0.12s var(--ease-240);
+    transition: background 0.12s var(--ease-spring);
 }
 
 .folder-item:active {
-    background: rgba(238, 242, 255, 0.95);
-    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(235, 245, 255, 0.98);
+    border-color: rgba(0, 122, 255, 0.35);
 }
 
 .folder-item-icon {
@@ -1037,16 +1064,16 @@ input:checked + .slider:before {
     align-items: center;
     gap: 8px;
     padding: 12px 14px;
-    background: rgba(248, 250, 252, 0.9);
-    border-top: 1px solid rgba(226, 232, 240, 0.8);
+    background: rgba(248, 250, 252, 0.95);
+    border-top: 1px solid var(--ios-separator);
 }
 
 .btn-new-folder {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(203, 213, 225, 0.8);
     color: var(--text-secondary);
-    padding: 11px 14px;
-    border-radius: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
     font-size: 12px;
     font-weight: 800;
     cursor: pointer;
@@ -1055,39 +1082,40 @@ input:checked + .slider:before {
 
 .btn-select-current {
     flex: 1;
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: linear-gradient(180deg, #34c759 0%, #28a745 100%);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: #fff;
     padding: 12px 16px;
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-    transition: transform 0.12s var(--ease-240);
+    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+    transition: transform 0.12s var(--ease-spring);
 }
 
 .btn-select-current:active {
     transform: scale(0.97);
 }
 
-/* Toast (Frosted Glass Pill) */
+/* Toast */
 #toast {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(120px);
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(30, 30, 32, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
     padding: 10px 22px;
     border-radius: 30px;
     font-size: 12.5px;
     font-weight: 700;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
     backdrop-filter: blur(16px);
-    transition: transform 0.22s var(--ease-240);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.22s var(--ease-spring);
     z-index: 3000;
     max-width: 90vw;
     text-align: center;
