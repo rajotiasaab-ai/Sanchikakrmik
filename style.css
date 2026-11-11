@@ -1,39 +1,55 @@
 :root {
-    /* iOS 18/19 & Android 17 Unified Fluid Glass Design System */
-    --bg-base: #f5f6fa;
-    --card-glass: rgba(255, 255, 255, 0.72);
-    --card-glass-hover: rgba(255, 255, 255, 0.88);
-    --card-border: rgba(255, 255, 255, 0.95);
-    --card-border-subtle: rgba(226, 232, 240, 0.7);
+    /* ======================================================== */
+    /* APPLE LIQUID GLASS SPECIFICATION (visionOS & NEXT-GEN iOS)*/
+    /* ======================================================== */
+    --bg-base: #f6f7fb;
     
-    /* Apple System Colors */
-    --ios-blue: #007aff;
-    --ios-blue-gradient: linear-gradient(180deg, #007aff 0%, #0062d2 100%);
-    --ios-green: #34c759;
-    --ios-indigo: #5856d6;
-    --ios-teal: #30b0c7;
-    --ios-orange: #ff9500;
-    --ios-gray-fill: rgba(120, 120, 128, 0.12);
-    --ios-separator: rgba(60, 60, 67, 0.12);
+    /* Liquid Glass Material Blends */
+    --liquid-glass-card: rgba(255, 255, 255, 0.70);
+    --liquid-glass-raised: rgba(255, 255, 255, 0.85);
+    --liquid-glass-capsule: rgba(235, 243, 255, 0.88);
+    
+    /* Optical Specular Bevels & Rims */
+    --glass-specular-rim: rgba(255, 255, 255, 0.95);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.90);
+    --glass-border-subtle: 1px solid rgba(226, 232, 240, 0.65);
+    --glass-prismatic-rim: linear-gradient(
+        135deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.50) 40%, 
+        rgba(186, 230, 253, 0.40) 60%, 
+        rgba(255, 255, 255, 0.90) 100%
+    );
+
+    /* Apple Liquid Optics Colors */
+    --liquid-blue: #007aff;
+    --liquid-blue-gradient: linear-gradient(180deg, #007aff 0%, #0056cb 100%);
+    --liquid-green: #34c759;
+    --liquid-indigo: #5856d6;
+    --liquid-cyan: #0284c7;
+    --liquid-orange: #ff9500;
+    --liquid-gray-tray: rgba(118, 118, 128, 0.12);
+    --liquid-separator: rgba(60, 60, 67, 0.10);
 
     /* Typography (SF Pro Hierarchy) */
     --text-primary: #1d1d1f;
-    --text-secondary: #424245;
+    --text-secondary: #3a3a3c;
     --text-muted: #86868b;
     --text-dim: #a1a1a6;
 
-    /* Apple Depth & Soft Ambient Shadows */
-    --ios-shadow-card: 
-        0 12px 34px -6px rgba(0, 0, 0, 0.04),
-        0 4px 12px -2px rgba(0, 0, 0, 0.02),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+    /* Liquid Volumetric Refraction Shadows */
+    --liquid-shadow-card: 
+        0 14px 38px -6px rgba(15, 23, 42, 0.04),
+        0 4px 12px -2px rgba(0, 122, 255, 0.02),
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 2px 0 rgba(0, 0, 0, 0.015);
 
-    --ios-shadow-active:
-        0 18px 40px -4px rgba(0, 122, 255, 0.12),
-        0 6px 16px -2px rgba(0, 0, 0, 0.04),
-        inset 0 1px 1px 0 rgba(255, 255, 255, 1);
+    --liquid-shadow-float:
+        0 20px 45px -8px rgba(0, 122, 255, 0.12),
+        0 6px 18px -2px rgba(15, 23, 42, 0.03),
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 1);
 
-    /* iOS Fluid Spring Physics */
+    /* Tactile Spring Physics */
     --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
     --ease-240: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -50,17 +66,38 @@
 body {
     background-color: var(--bg-base);
     background-image: 
-        radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.08) 0px, transparent 48%),
-        radial-gradient(at 100% 0%, rgba(48, 176, 199, 0.09) 0px, transparent 45%),
-        radial-gradient(at 50% 50%, rgba(88, 86, 214, 0.05) 0px, transparent 55%),
-        radial-gradient(at 100% 100%, rgba(52, 199, 89, 0.07) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(175, 82, 222, 0.06) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.09) 0px, transparent 48%),
+        radial-gradient(at 100% 5%, rgba(56, 189, 248, 0.11) 0px, transparent 45%),
+        radial-gradient(at 50% 50%, rgba(88, 86, 214, 0.06) 0px, transparent 55%),
+        radial-gradient(at 100% 95%, rgba(52, 199, 89, 0.08) 0px, transparent 50%),
+        radial-gradient(at 5% 95%, rgba(168, 85, 247, 0.07) 0px, transparent 50%);
     background-attachment: fixed;
     color: var(--text-primary);
     display: flex;
     justify-content: center;
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
+}
+
+/* Subtle moving optical caustic simulation */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.45) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+    animation: liquid-caustic 16s ease-in-out infinite alternate;
+}
+
+@keyframes liquid-caustic {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(3deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 #app {
@@ -75,7 +112,7 @@ body {
 }
 
 /* ======================================================== */
-/* 1. iOS + ANDROID 17 HEADER WITH ELEGANT SQUIRCLE PILL    */
+/* 1. LIQUID GLASS HEADER & SQUIRCLE BRANDING PILL          */
 /* ======================================================== */
 .app-header {
     display: flex;
@@ -97,16 +134,16 @@ body {
 }
 
 .logo-gem {
-    background: linear-gradient(135deg, #007aff, #30b0c7);
+    background: linear-gradient(135deg, #007aff, #38bdf8);
     color: #fff;
     width: 26px;
     height: 26px;
-    border-radius: 8px; /* iOS Continuous Squircle */
+    border-radius: 9px; /* Continuous Squircle */
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .brand-title {
@@ -119,7 +156,7 @@ body {
 .hz-tag {
     background: rgba(52, 199, 89, 0.12);
     border: 1px solid rgba(52, 199, 89, 0.3);
-    color: var(--ios-green);
+    color: var(--liquid-green);
     font-size: 9.5px;
     font-weight: 800;
     padding: 2.5px 7px;
@@ -127,27 +164,27 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Discreet Anoop Kumar branding badge */
+/* Discreet Anoop Kumar branding pill with liquid refraction */
 .creator-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    padding: 2.5px 9px;
-    border-radius: 12px;
+    padding: 2.5px 10px;
+    border-radius: 14px;
     width: fit-content;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .rgb-mini-pulse {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--ios-blue);
-    box-shadow: 0 0 6px rgba(0, 122, 255, 0.5);
+    background: var(--liquid-blue);
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.6);
     animation: rgb-dot 2.5s infinite alternate;
 }
 
@@ -159,7 +196,7 @@ body {
 
 .creator-text {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-secondary);
 }
 
@@ -175,9 +212,9 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     transition: transform 0.12s var(--ease-spring), background 0.15s;
 }
 
@@ -187,19 +224,19 @@ body {
 }
 
 /* ======================================================== */
-/* 2. iOS STEPPER (CAPSULE SEGMENTED FLOW)                  */
+/* 2. LIQUID STEPPER (CAPSULE FLOW STREAM)                  */
 /* ======================================================== */
 .flow-stepper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.65);
-    border: 1px solid var(--card-border);
-    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.68);
+    border: var(--glass-border);
+    border-radius: 20px;
     padding: 8px 16px;
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    box-shadow: var(--ios-shadow-card);
+    backdrop-filter: blur(36px) saturate(210%);
+    -webkit-backdrop-filter: blur(36px) saturate(210%);
+    box-shadow: var(--liquid-shadow-card);
 }
 
 .step-item {
@@ -218,59 +255,80 @@ body {
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(203, 213, 225, 0.8);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(203, 213, 225, 0.85);
     color: var(--text-secondary);
     font-size: 10.5px;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .step-item.active .step-dot {
-    background: var(--ios-blue-gradient);
+    background: var(--liquid-blue-gradient);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.35);
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .step-label {
     font-size: 11.5px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-primary);
 }
 
 .step-track {
     flex: 1;
     height: 2px;
-    background: rgba(203, 213, 225, 0.5);
+    background: rgba(203, 213, 225, 0.55);
     margin: 0 10px;
     border-radius: 2px;
 }
 
 .step-track.filled {
-    background: var(--ios-blue-gradient);
+    background: var(--liquid-blue-gradient);
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.4);
 }
 
 /* ======================================================== */
-/* 3. iOS INSET GROUPED LIQUID GLASS CARDS                  */
+/* 3. APPLE LIQUID GLASS CARDS WITH REFRACTIVE SHEEN       */
 /* ======================================================== */
 .flow-card {
-    background: var(--card-glass);
-    border: 1px solid var(--card-border);
-    border-radius: 26px; /* iOS Continuous Squircle */
+    background: var(--liquid-glass-card);
+    border: var(--glass-border);
+    border-radius: 28px; /* VisionOS & iOS Squircle */
     padding: 16px 18px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    backdrop-filter: blur(35px) saturate(210%);
-    -webkit-backdrop-filter: blur(35px) saturate(210%);
-    box-shadow: var(--ios-shadow-card);
+    backdrop-filter: blur(45px) saturate(220%) contrast(102%);
+    -webkit-backdrop-filter: blur(45px) saturate(220%) contrast(102%);
+    box-shadow: var(--liquid-shadow-card);
     position: relative;
     overflow: hidden;
     transition: transform 0.15s var(--ease-spring), box-shadow 0.2s;
+}
+
+/* Specular curved liquid glass top reflection */
+.flow-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(
+        180deg, 
+        rgba(255, 255, 255, 0.55) 0%, 
+        rgba(255, 255, 255, 0.15) 60%, 
+        transparent 100%
+    );
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    pointer-events: none;
+    opacity: 0.85;
 }
 
 .flow-card-head {
@@ -278,16 +336,18 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    position: relative;
+    z-index: 1;
 }
 
 .flow-stage-tag {
     font-size: 9.5px;
     font-weight: 800;
-    color: var(--ios-blue);
-    background: rgba(0, 122, 255, 0.1);
-    border: 1px solid rgba(0, 122, 255, 0.22);
+    color: var(--liquid-blue);
+    background: rgba(0, 122, 255, 0.10);
+    border: 1px solid rgba(0, 122, 255, 0.24);
     padding: 2.5px 8px;
-    border-radius: 7px;
+    border-radius: 8px;
     letter-spacing: 0.5px;
 }
 
@@ -308,8 +368,8 @@ body {
 .stats-badge {
     font-size: 10.5px;
     font-weight: 700;
-    color: var(--ios-indigo);
-    background: rgba(88, 86, 214, 0.1);
+    color: var(--liquid-indigo);
+    background: rgba(88, 86, 214, 0.10);
     padding: 2.5px 8px;
     border-radius: 8px;
 }
@@ -317,7 +377,7 @@ body {
 .btn-link {
     background: none;
     border: none;
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     font-size: 12.5px;
     font-weight: 700;
     cursor: pointer;
@@ -331,17 +391,22 @@ body {
     font-size: 12px;
     color: var(--text-muted);
     line-height: 1.45;
+    position: relative;
+    z-index: 1;
 }
 
 /* ======================================================== */
-/* STAGE 1: iOS SEGMENTED CONTROL PRESETS & DISPLAY         */
+/* STAGE 1: OPTICAL LIQUID SEGMENTED CONTROL                */
 /* ======================================================== */
 .source-presets {
-    background: var(--ios-gray-fill);
-    padding: 3px;
-    border-radius: 14px; /* iOS Segmented Capsule */
+    background: var(--liquid-gray-tray);
+    padding: 3.5px;
+    border-radius: 16px; /* Liquid Segmented Tray */
     display: flex;
     gap: 3px;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
 }
 
 .preset-chip {
@@ -350,7 +415,7 @@ body {
     border: none;
     color: var(--text-secondary);
     padding: 7px 6px;
-    border-radius: 11px;
+    border-radius: 13px;
     font-size: 11.5px;
     font-weight: 700;
     cursor: pointer;
@@ -363,9 +428,9 @@ body {
 }
 
 .preset-chip.active {
-    background: #ffffff;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-    color: var(--ios-blue);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    color: var(--liquid-blue);
 }
 
 .preset-chip:active {
@@ -376,13 +441,15 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(0, 122, 255, 0.2);
-    border-radius: 18px;
-    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 122, 255, 0.22);
+    border-radius: 20px;
+    padding: 13px 15px;
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     transition: border-color 0.2s, background 0.15s;
+    position: relative;
+    z-index: 1;
 }
 
 .source-display-box:active {
@@ -411,7 +478,7 @@ body {
 .source-path {
     font-size: 13.5px;
     font-weight: 800;
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -424,12 +491,14 @@ body {
 }
 
 /* ======================================================== */
-/* STAGE 2: iOS INSET GROUPED PIPELINE NODES                */
+/* STAGE 2: LIQUID FLOW PIPELINE STREAM                     */
 /* ======================================================== */
 .flow-pipeline-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    position: relative;
+    z-index: 1;
 }
 
 .flow-node-row {
@@ -438,11 +507,11 @@ body {
     justify-content: space-between;
     background: rgba(255, 255, 255, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 10px 14px;
     gap: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    transition: transform 0.12s var(--ease-spring), box-shadow 0.15s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    transition: transform 0.12s var(--ease-spring), box-shadow 0.15s, border-color 0.15s;
 }
 
 /* Origin Node (Left) */
@@ -473,19 +542,19 @@ body {
     font-weight: 700;
 }
 
-/* Flow Stream Connector (Center) */
+/* Center Optical Flow Connector */
 .flow-stream-connector {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     font-size: 12px;
     font-weight: 800;
 }
 
 .flow-stream-arrow {
     font-size: 13px;
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     animation: flowPulse 2s infinite ease-in-out;
 }
 
@@ -495,7 +564,7 @@ body {
     100% { transform: translateX(-2px); opacity: 0.6; }
 }
 
-/* Destination Target Pill (Right - iOS Pill Button) */
+/* Destination Target Pill (Right - Refractive Glass Capsule) */
 .flow-target-node {
     flex: 1;
     display: flex;
@@ -506,24 +575,25 @@ body {
 }
 
 .target-folder-pill {
-    background: rgba(235, 245, 255, 0.88);
-    border: 1px solid rgba(0, 122, 255, 0.22);
+    background: var(--liquid-glass-capsule);
+    border: 1px solid rgba(0, 122, 255, 0.25);
     padding: 6px 12px;
-    border-radius: 12px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
     overflow: hidden;
     max-width: 100%;
-    box-shadow: 0 1px 4px rgba(0, 122, 255, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 122, 255, 0.08), inset 0 1px 1.5px rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
     transition: background 0.15s, border-color 0.15s, transform 0.1s var(--ease-spring);
 }
 
 .target-folder-pill:active {
     transform: scale(0.96);
-    background: rgba(215, 235, 255, 0.98);
-    border-color: var(--ios-blue);
+    background: rgba(220, 238, 255, 0.98);
+    border-color: var(--liquid-blue);
 }
 
 .target-folder-icon {
@@ -533,7 +603,7 @@ body {
 .target-folder-text {
     font-size: 12px;
     font-weight: 800;
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -545,24 +615,26 @@ body {
 }
 
 /* ======================================================== */
-/* STAGE 3: iOS TOGGLES & EXECUTION                         */
+/* STAGE 3: OPTIONS & LIQUID EXECUTION                      */
 /* ======================================================== */
 .options-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
+    position: relative;
+    z-index: 1;
 }
 
 .option-pill {
-    background: rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.80);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 11px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .option-meta {
@@ -582,7 +654,7 @@ body {
     color: var(--text-muted);
 }
 
-/* Iconic iOS Toggle Switch (51x31 / 38x22) */
+/* Apple Liquid Toggle Switch */
 .switch {
     position: relative;
     display: inline-block;
@@ -615,11 +687,12 @@ body {
     background-color: white;
     transition: .25s var(--ease-spring);
     border-radius: 50%;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16), 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
 input:checked + .slider {
-    background-color: var(--ios-green); /* iOS System Green */
+    background-color: var(--liquid-green);
+    box-shadow: 0 0 10px rgba(52, 199, 89, 0.35);
 }
 
 input:checked + .slider:before {
@@ -630,12 +703,14 @@ input:checked + .slider:before {
 .flow-progress-card {
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(0, 122, 255, 0.3);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.1);
+    box-shadow: 0 4px 18px rgba(0, 122, 255, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    position: relative;
+    z-index: 1;
 }
 
 .progress-meta {
@@ -647,7 +722,7 @@ input:checked + .slider:before {
 }
 
 .pct-glow {
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     font-weight: 900;
 }
 
@@ -662,7 +737,7 @@ input:checked + .slider:before {
 .progress-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #007aff, #30b0c7, #007aff);
+    background: linear-gradient(90deg, #007aff, #38bdf8, #007aff);
     background-size: 200% 200%;
     animation: flow-shine 1.5s linear infinite;
     transition: width 0.12s var(--ease-240);
@@ -681,20 +756,22 @@ input:checked + .slider:before {
     text-overflow: ellipsis;
 }
 
-/* iOS Floating Primary Action Button */
+/* Apple Liquid Action Button */
 .flow-actions {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-top: 4px;
+    position: relative;
+    z-index: 1;
 }
 
 .btn-flow-primary {
-    background: var(--ios-blue-gradient);
+    background: var(--liquid-blue-gradient);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.40);
     padding: 16px;
-    border-radius: 18px; /* iOS Continuous Squircle */
+    border-radius: 20px; /* Volumetric Squircle */
     font-size: 15px;
     font-weight: 800;
     cursor: pointer;
@@ -702,7 +779,9 @@ input:checked + .slider:before {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 10px 25px -4px rgba(0, 122, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 12px 28px -4px rgba(0, 122, 255, 0.42), 
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.50);
     transition: transform 0.12s var(--ease-spring), box-shadow 0.2s;
 }
 
@@ -724,21 +803,21 @@ input:checked + .slider:before {
 }
 
 .btn-flow-secondary {
-    background: rgba(255, 255, 255, 0.75);
-    border: 1px solid var(--card-border-subtle);
+    background: rgba(255, 255, 255, 0.78);
+    border: var(--glass-border-subtle);
     color: var(--text-secondary);
     padding: 12px;
-    border-radius: 16px;
+    border-radius: 18px;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     transition: transform 0.12s var(--ease-spring), background 0.15s;
 }
 
 .btn-flow-secondary:active {
     transform: scale(0.97);
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
 }
 
 /* ======================================================== */
@@ -769,7 +848,7 @@ input:checked + .slider:before {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--ios-blue);
+    background: var(--liquid-blue);
     box-shadow: 0 0 6px rgba(0, 122, 255, 0.5);
 }
 
@@ -782,15 +861,16 @@ input:checked + .slider:before {
 /* 5. PERMISSION CARD                                       */
 /* ======================================================== */
 .perm-card {
-    background: rgba(255, 249, 235, 0.85);
+    background: rgba(255, 249, 235, 0.88);
     border: 1px solid rgba(245, 158, 11, 0.35);
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 12px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--liquid-shadow-card);
 }
 
 .perm-left {
@@ -817,11 +897,11 @@ input:checked + .slider:before {
 }
 
 .btn-perm-grant {
-    background: var(--ios-orange);
+    background: var(--liquid-orange);
     color: #fff;
     border: none;
     padding: 8px 13px;
-    border-radius: 10px;
+    border-radius: 11px;
     font-size: 11.5px;
     font-weight: 800;
     cursor: pointer;
@@ -834,14 +914,14 @@ input:checked + .slider:before {
 }
 
 /* ======================================================== */
-/* 6. iOS SHEET PRESENTATION FOLDER PICKER MODAL            */
+/* 6. APPLE LIQUID GLASS SHEET PRESENTATION MODAL           */
 /* ======================================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     z-index: 2000;
     display: flex;
     justify-content: center;
@@ -856,25 +936,25 @@ input:checked + .slider:before {
 }
 
 .modal-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-top-left-radius: 28px;
-    border-top-right-radius: 28px;
+    background: rgba(255, 255, 255, 0.88);
+    border: var(--glass-border);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     width: 100%;
     max-width: 520px;
     height: 82vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 -15px 45px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 -15px 48px rgba(0, 0, 0, 0.12), inset 0 1.5px 2px rgba(255, 255, 255, 1);
     overflow: hidden;
-    backdrop-filter: blur(40px) saturate(210%);
-    -webkit-backdrop-filter: blur(40px) saturate(210%);
+    backdrop-filter: blur(48px) saturate(220%);
+    -webkit-backdrop-filter: blur(48px) saturate(220%);
     animation: slideUp 0.25s var(--ease-spring);
 }
 
-/* iOS Pull-down Sheet Grabber Handle */
+/* Apple Liquid Grabber Handle */
 .ios-sheet-grabber {
-    width: 36px;
+    width: 38px;
     height: 5px;
     background: rgba(60, 60, 67, 0.22);
     border-radius: 4px;
@@ -889,7 +969,7 @@ input:checked + .slider:before {
 
 @media (min-width: 540px) {
     .modal-card {
-        border-radius: 26px;
+        border-radius: 28px;
         height: 75vh;
     }
     .ios-sheet-grabber {
@@ -902,7 +982,7 @@ input:checked + .slider:before {
     justify-content: space-between;
     align-items: center;
     padding: 10px 18px 12px 18px;
-    border-bottom: 1px solid var(--ios-separator);
+    border-bottom: 1px solid var(--liquid-separator);
 }
 
 .modal-header-meta {
@@ -947,28 +1027,28 @@ input:checked + .slider:before {
     padding: 8px 14px;
     overflow-x: auto;
     background: rgba(248, 250, 252, 0.75);
-    border-bottom: 1px solid var(--ios-separator);
+    border-bottom: 1px solid var(--liquid-separator);
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
 
 .chip {
     background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(203, 213, 225, 0.7);
+    border: 1px solid rgba(203, 213, 225, 0.75);
     color: var(--text-secondary);
     padding: 6px 11px;
-    border-radius: 12px;
+    border-radius: 13px;
     font-size: 11.5px;
     font-weight: 700;
     cursor: pointer;
     flex-shrink: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .chip:active {
-    background: rgba(0, 122, 255, 0.1);
-    border-color: var(--ios-blue);
-    color: var(--ios-blue);
+    background: rgba(0, 122, 255, 0.12);
+    border-color: var(--liquid-blue);
+    color: var(--liquid-blue);
 }
 
 .breadcrumbs-bar {
@@ -977,15 +1057,15 @@ input:checked + .slider:before {
     gap: 8px;
     padding: 10px 14px;
     background: rgba(248, 250, 252, 0.85);
-    border-bottom: 1px solid var(--ios-separator);
+    border-bottom: 1px solid var(--liquid-separator);
 }
 
 .btn-up-dir {
     background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(203, 213, 225, 0.8);
+    border: 1px solid rgba(203, 213, 225, 0.85);
     color: var(--text-secondary);
     padding: 5px 10px;
-    border-radius: 8px;
+    border-radius: 9px;
     font-size: 11.5px;
     font-weight: 800;
     cursor: pointer;
@@ -999,7 +1079,7 @@ input:checked + .slider:before {
 .breadcrumb-path {
     font-size: 12px;
     font-weight: 700;
-    color: var(--ios-blue);
+    color: var(--liquid-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1019,11 +1099,11 @@ input:checked + .slider:before {
     align-items: center;
     gap: 10px;
     padding: 11px 14px;
-    border-radius: 14px;
+    border-radius: 16px;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.95);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
     transition: background 0.12s var(--ease-spring);
 }
 
@@ -1065,33 +1145,34 @@ input:checked + .slider:before {
     gap: 8px;
     padding: 12px 14px;
     background: rgba(248, 250, 252, 0.95);
-    border-top: 1px solid var(--ios-separator);
+    border-top: 1px solid var(--liquid-separator);
 }
 
 .btn-new-folder {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(203, 213, 225, 0.8);
+    background: rgba(255, 255, 255, 0.90);
+    border: 1px solid rgba(203, 213, 225, 0.85);
     color: var(--text-secondary);
     padding: 12px 14px;
-    border-radius: 14px;
+    border-radius: 15px;
     font-size: 12px;
     font-weight: 800;
     cursor: pointer;
     white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .btn-select-current {
     flex: 1;
     background: linear-gradient(180deg, #34c759 0%, #28a745 100%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     color: #fff;
     padding: 12px 16px;
-    border-radius: 14px;
+    border-radius: 15px;
     font-size: 13px;
     font-weight: 800;
     cursor: pointer;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+    box-shadow: 0 4px 14px rgba(52, 199, 89, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     transition: transform 0.12s var(--ease-spring);
 }
 
@@ -1105,16 +1186,16 @@ input:checked + .slider:before {
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(120px);
-    background: rgba(30, 30, 32, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(25, 25, 28, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     color: #fff;
     padding: 10px 22px;
     border-radius: 30px;
     font-size: 12.5px;
     font-weight: 700;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     transition: transform 0.22s var(--ease-spring);
     z-index: 3000;
     max-width: 90vw;
